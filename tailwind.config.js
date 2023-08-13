@@ -14,6 +14,7 @@ export const theme = {
       "bgButtonBlue": "#456DA5",
       "colorTextButtonBlue": "#003A40",
       "colorTextWelcomeBlue": "#1B365D",
+      "colorMenuText": "#64748B",
     },
     width: {
       'loginWidth': '470x',

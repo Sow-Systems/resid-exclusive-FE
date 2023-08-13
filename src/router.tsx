@@ -9,7 +9,7 @@ import { Configuration } from "./pages/configuration";
 import { Employees } from "./pages/employees";
 
 export function AppRoutes() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return isAuthenticated ? (
     <MainLayout>
