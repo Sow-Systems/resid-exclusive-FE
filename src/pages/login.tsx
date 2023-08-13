@@ -6,7 +6,7 @@ import { Input } from "@/components/input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 import * as yup from "yup";
 
@@ -41,10 +41,10 @@ export function Login() {
 
   return (
     <div className="flex flex-col h-screen justify-center items-center">
-      <div className="bg-bgGray w-[460px] flex flex-col justify-center items-center rounded-3xl">
+      <div className="bg-bgGray w-[460px] flex flex-col justify-center items-center rounded-3xl text-colorTextWelcomeBlue">
         <img src={logoLogin} className="ml-5 mr-5" alt="" />
-        <p className="text-4xl text-colorTextWelcomeBlue">Seja Bem Vindo!</p>
-        <p className="mt-1 mb-12 text-colorTextWelcomeBlue">Faça seu login</p>
+        <p className="text-4xl ">Seja Bem Vindo!</p>
+        <p className="mt-1 mb-12 ">Faça seu login</p>
         <form onSubmit={handleSubmit(onSubmit)} className="w-4/5">
           <div className="bg-white flex flex-row p-1 rounded-xl mb-3">
             <img
@@ -58,7 +58,7 @@ export function Login() {
               type="text"
               placeholder="login"
               register={register("email")}
-              className="w-80"
+              className="w-80 ml-1"
             />
           </div>
           {errors.email && (
@@ -72,7 +72,7 @@ export function Login() {
               type={showPassword ? "text" : "password"}
               placeholder="senha"
               register={register("password")}
-              className="w-72"
+              className="w-72 ml-1"
             />
             <div
               className="flex justify-center align-middle items-center ml-2"
@@ -80,9 +80,9 @@ export function Login() {
               title={showPassword ? "Ocultar senha" : "Mostrar senha"}
             >
               {showPassword ? (
-                <AiOutlineEye size={25} style={{ color: "#1B365D" }} />
+                <IoMdEye size={25} style={{ color: "#1B365D" }} />
                 ) : (
-                <AiOutlineEyeInvisible size={25} style={{ color: "#1B365D" }} />
+                <IoMdEyeOff size={25} style={{ color: "#1B365D" }} />
               )}
             </div>
           </div>
@@ -91,7 +91,7 @@ export function Login() {
               {errors.password.message}
             </div>
           )}
-          <div className="flex flex-row justify-between text-colorTextWelcomeBlue text-sm">
+          <div className="flex flex-row justify-between text-sm">
             <div className="flex flex-row gap-2">
             <input type="checkbox" />
             <p>Lembrar Acesso</p>
