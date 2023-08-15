@@ -3,8 +3,6 @@ export const content = [
   "./app/**/*.{js,ts,jsx,tsx}",
   "./pages/**/*.{js,ts,jsx,tsx}",
   "./components/**/*.{js,ts,jsx,tsx}",
-
-  // Or if using `src` directory:
   "./src/**/*.{js,ts,jsx,tsx}",
 ];
 export const theme = {
@@ -22,6 +20,11 @@ export const theme = {
     height: {
       'loginHeight': '690px',
     },
+    theme: {
+      fontFamily: {
+        'thrifty': ['Thrifty', 'sans-serif'], // Font for the specific page
+      }
+    }
   },
 };
 export const plugins = [];
