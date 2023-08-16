@@ -12,7 +12,7 @@ export function MainLayout(props: MainLayoutProps): React.JSX.Element {
   return (
     <div className="flex h-screen flex-grow overflow-y-auto">
       <Sidebar />
-      <div className="flex-grow flex flex-col overflow-hidden">
+      <div className="flex-grow flex flex-col overflow-hidden pl-32">
         <Header />
         <div className="bg-bgGray flex-grow overflow-y-auto">{children}</div>
         <Footer />
