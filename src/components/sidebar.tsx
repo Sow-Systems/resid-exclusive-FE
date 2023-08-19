@@ -30,10 +30,10 @@ function isActiveClassWithOptions() {
 }
 
 export function Sidebar() {
-  const [expanded, setExpanded] = useState(true);
-  const [insideLinkFuncionariosExpanded, setInsideLinkFuncionariosExpanded] = useState(true);
-  const [insideLinkObrasExpanded, setInsideLinkObrasExpanded] = useState(true);
-  const [insideLinkTerceirosExpanded, setInsideLinkTerceirosExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [insideLinkFuncionariosExpanded, setInsideLinkFuncionariosExpanded] = useState(false);
+  const [insideLinkObrasExpanded, setInsideLinkObrasExpanded] = useState(false);
+  const [insideLinkTerceirosExpanded, setInsideLinkTerceirosExpanded] = useState(false);
   const [activeOption, setActiveOption] = useState("Home");
 
   const handleMouseEnter = () => {
