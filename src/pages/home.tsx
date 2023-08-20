@@ -86,8 +86,8 @@ export function Home() {
   return (
     <div className="flex h-full p-5">
       <div className="flex flex-col w-full gap-5">
-        <div className="flex flex-row justify-between gap-2">
-          <Card className="w-80">
+        <div className="flex flex-row justify-between gap-5">
+          <Card className="w-full h-40">
             <div className="flex flex-row p-4 h-full">
               <div className="flex flex-col justify-around">
                 <p className="text-sm font-medium mb-7 mr-4">
@@ -103,7 +103,7 @@ export function Home() {
               />
             </div>
           </Card>
-          <Card className="w-80">
+          <Card className="w-full">
             <div className="flex flex-row p-4  h-full">
             <div className="flex flex-col justify-around">
                 <p className="text-sm font-medium mb-7 mr-4">
@@ -119,8 +119,8 @@ export function Home() {
               />
             </div>
           </Card>
-          <Card className="w-80">
-            <div className="flex flex-row p-4">
+          <Card className="w-full">
+            <div className="flex flex-row p-4 h-full">
             <div className="flex flex-col justify-around">
                 <p className="text-sm font-medium mb-7 mr-4">
                   Folhas de Pagamento em Aberto
@@ -130,8 +130,8 @@ export function Home() {
               <img src={PayCheck} alt="Contas a Pagar" height={50} width={50} />
             </div>
           </Card>
-          <Card className="w-80">
-            <div className="flex flex-row p-4">
+          <Card className="w-full">
+            <div className="flex flex-row p-4 h-full">
             <div className="flex flex-col justify-around">
                 <p className="text-sm font-medium mb-7 mr-4">
                   Folhas de Pagamento em Aberto
@@ -144,12 +144,12 @@ export function Home() {
         </div>
 
         <div className="flex flex-row justify-around gap-2 h-[380px]">
-          <Card className="w-full overflow-y-auto">
+          <Card className="w-full">
             <p className="text-sm font-medium text-left w-full p-8 items-center">
               Contas à vencer nos próximos 5 dias
             </p>
 
-            <div className="flex w-full">
+            <div className="flex w-full overflow-y-auto">
               <table className="border-collapse w-full ml-3 mr-3">
                 <thead className="text-[#64748B] text-sm font-light text-left">
                   <tr>
@@ -270,12 +270,12 @@ export function Home() {
         </div>
 
         <div className="flex flex-row justify-around gap-2 h-[380px] pb-4">
-          <Card className="w-full overflow-y-auto">
+          <Card className="w-full">
             <p className="text-sm font-medium text-left w-full p-8 items-center">
               Recebimentos dos próximos 5 dias
             </p>
 
-            <div className="flex w-full">
+            <div className="flex w-full overflow-y-auto">
               <table className="border-collapse w-full ml-3 mr-3">
                 <thead className="text-[#64748B] text-sm font-light text-left">
                   <tr>
@@ -398,7 +398,7 @@ export function Home() {
             </p>
             <div className="flex flex-col justify-start items-start w-full pl-3 overflow-y-auto">
               {birthdayDayUsers.map((user) => (
-                <div className="flex flex-row gap-6 mb-2 mt-2">
+                <div className="flex flex-row gap-4 mb-2 mt-2">
                   <div>
                     <img
                       src={user.img}
@@ -418,13 +418,13 @@ export function Home() {
           </Card>
         </div>
         <div className="h-screen pb-2">
-          <Card className="flex p-4 max-h-[550px]">
+          <Card className="flex p-4 min-h-[610px] max-h-[610px]">
             <p className="mb-5 border-b border-black p-2 pb-3 font-bold text-base w-full text-center">
               Aniversáriantes do Mês
             </p>
             <div className="flex flex-col justify-start items-start w-full pl-3 overflow-y-auto">
               {birthdayMonthUsers.map((user) => (
-                <div className="flex flex-row gap-6 mb-2 mt-2">
+                <div className="flex flex-row gap-4 mb-2 mt-2">
                   <div>
                     <img
                       src={user.img}

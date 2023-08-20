@@ -11,7 +11,7 @@ import { EmployeesNew } from "./pages/employeesNew";
 import { EmployeesTimeSheet } from "./pages/employeesTimeSheet";
 
 export function AppRoutes() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return isAuthenticated ? (
     <MainLayout>
