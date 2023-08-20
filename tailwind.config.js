@@ -11,6 +11,15 @@ export const theme = {
   extend: {
     colors: {
       'bgGray': '#D6D4CE',
+      "bgButtonBlue": "#456DA5",
+      "colorTextButtonBlue": "#003A40",
+      "colorTextWelcomeBlue": "#1B365D",
+    },
+    width: {
+      'loginWidth': '470x',
+    },
+    height: {
+      'loginHeight': '690px',
     },
   },
 };
