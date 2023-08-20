@@ -130,6 +130,17 @@ export function Home() {
               <img src={PayCheck} alt="Contas a Pagar" height={50} width={50} />
             </div>
           </Card>
+          <Card className="w-80">
+            <div className="flex flex-row p-4">
+            <div className="flex flex-col justify-around">
+                <p className="text-sm font-medium mb-7 mr-4">
+                  Folhas de Pagamento em Aberto
+                </p>
+                <p className="text-[#FF5D02] text-4xl">15</p>
+              </div>
+              <img src={PayCheck} alt="Contas a Pagar" height={50} width={50} />
+            </div>
+          </Card>
         </div>
 
         <div className="flex flex-row justify-around gap-2 h-[380px]">
@@ -407,7 +418,7 @@ export function Home() {
           </Card>
         </div>
         <div className="h-screen pb-2">
-          <Card className="flex p-4 h-full">
+          <Card className="flex p-4 max-h-[550px]">
             <p className="mb-5 border-b border-black p-2 pb-3 font-bold text-base w-full text-center">
               Aniversáriantes do Mês
             </p>

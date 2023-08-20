@@ -40,7 +40,7 @@ export function Login() {
   };
 
   return (
-    <div className="flex flex-col h-screen justify-center items-center font-[Thrifty] ">
+    <div className="flex flex-col h-screen justify-center items-center ">
       <div className="bg-bgGray w-[460px] flex flex-col justify-center items-center rounded-3xl text-colorTextWelcomeBlue">
         <img src={logoLogin} className="ml-5 mr-5" alt="" />
         <p className="text-4xl">Seja Bem Vindo!</p>
