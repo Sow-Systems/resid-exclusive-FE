@@ -4,9 +4,11 @@ import { Login } from "./pages/login";
 import { MainLayout } from "./components/mainLayout";
 import { Constructions } from "./pages/constructions";
 import { Finance } from "./pages/finance";
-import { ThirdParty } from "./pages/thirdParty";
+import { ThirdPartyNew } from "./pages/thirdPartyNew";
+import { ThirdPartyPayCheck } from "./pages/thirdPartyPayCheck";
 import { Configuration } from "./pages/configuration";
-import { Employees } from "./pages/employees";
+import { EmployeesNew } from "./pages/employeesNew";
+import { EmployeesTimeSheet } from "./pages/employeesTimeSheet";
 
 export function AppRoutes() {
   const isAuthenticated = true;
@@ -14,11 +16,13 @@ export function AppRoutes() {
   return isAuthenticated ? (
     <MainLayout>
       <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/constructions" element={<Constructions />} />
         <Route path="/finance" element={<Finance />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/thirdParty" element={<ThirdParty />} />
+        <Route path="/employees_new" element={<EmployeesNew />} />
+        <Route path="/employees_timesheet" element={<EmployeesTimeSheet />} />
+        <Route path="/thirdParty_new" element={<ThirdPartyNew />} />
+        <Route path="/thirdParty_paycheck" element={<ThirdPartyPayCheck />} />
         <Route path="/configuration" element={<Configuration />} />
       </Routes>
     </MainLayout>
