@@ -3,8 +3,6 @@ export const content = [
   "./app/**/*.{js,ts,jsx,tsx}",
   "./pages/**/*.{js,ts,jsx,tsx}",
   "./components/**/*.{js,ts,jsx,tsx}",
-
-  // Or if using `src` directory:
   "./src/**/*.{js,ts,jsx,tsx}",
 ];
 export const theme = {
@@ -14,6 +12,7 @@ export const theme = {
       "bgButtonBlue": "#456DA5",
       "colorTextButtonBlue": "#003A40",
       "colorTextWelcomeBlue": "#1B365D",
+      "colorMenuText": "#64748B",
     },
     width: {
       'loginWidth': '470x',
@@ -21,6 +20,11 @@ export const theme = {
     height: {
       'loginHeight': '690px',
     },
+    theme: {
+      fontFamily: {
+        'thrifty': ['Thrifty', 'sans-serif'], // Font for the specific page
+      }
+    }
   },
 };
 export const plugins = [];
