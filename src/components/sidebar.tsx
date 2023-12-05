@@ -110,8 +110,8 @@ export function Sidebar() {
     >
       <div className="flex flex-col items-center text-white gap-1">
         <img
-          src={expanded ? logoFull : logoSideBar}
-          width={expanded ? 200 : 110}
+          src={expanded ? logoSideBar : logoSideBar}
+          width={expanded ? 110 : 110}
           className="transition-opacity duration-300 ease-in-out opacity-100"
         />
       </div>
