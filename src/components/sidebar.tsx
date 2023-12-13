@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import logoSideBar from "@/assets/images/logoSideBar.svg";
-import logoFull from "@/assets/images/logoFull.png";
 import constructionIcon from "@/assets/icons/construction.svg";
 import dolarIcon from "@/assets/icons/dolar.svg";
 import thirdpartyIcon from "@/assets/icons/thirdparty.svg";
@@ -17,6 +16,7 @@ function isActiveClass(props: IsActiveClassProps) {
   return {
     background: isActive ? "#D6D2C480" : "transparent",
     padding: isActive ? "10px" : "10px",
+    borderRadius: "10px",
     transition: "background 0.2s ease-in-out",
   };
 }
@@ -26,6 +26,7 @@ function isActiveClassWithOptions() {
     background: "#D6D2C480",
     padding: "10px",
     transition: "background 0.2s ease-in-out",
+    borderRadius: "10px"
   };
 }
 
@@ -102,7 +103,7 @@ export function Sidebar() {
 
   return (
     <aside
-      className={`fixed top-0 h-full bg-[#1B365D] text-white ${
+      className={`fixed top-0 z-10 h-full bg-[#1B365D] text-white ${
         expanded ? "w-64" : "w-32"
       } transition-all`}
       onMouseEnter={handleMouseEnter}

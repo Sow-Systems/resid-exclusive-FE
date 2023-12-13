@@ -3,10 +3,7 @@ import bell from "@/assets/icons/bell.svg";
 
 export function Header() {
   return (
-    <header className="h-20 flex flex-row justify-between p-8 text-white">
-      <p className="text-lg text-[#D6D2C4] font-bold leading-7">
-           DashBoard
-          </p>
+    <header className="h-20 flex flex-row justify-end p-8 text-white">
       <div className="flex flex-row justify-center align-middle items-center gap-10">
         <div>
           <p className="text-lg text-[#D6D2C4] font-bold leading-7">
