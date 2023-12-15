@@ -2,9 +2,14 @@ import SearchBar from "@/components/searchBar";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import { CiClock2 } from "react-icons/ci";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import ptBR from "date-fns/locale/pt-BR";
+import excelIcon from "@/assets/icons/excel.svg";
+import pdfIcon from "@/assets/icons/pdf.svg";
+import addIcon from "@/assets/icons/add.svg";
+import { Button } from "@/components/button";
+import { dadosMockados } from "@/utils/mock/table";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -34,6 +39,49 @@ export function Constructions() {
     }
   };
 
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: "asc" | "desc";
+  } | null>(null);
+
+  const sortedProjects = useMemo(() => {
+    const sortableItems = [...dadosMockados]; // Copia os dados mockados
+    if (sortConfig !== null) {
+      sortableItems.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [dadosMockados, sortConfig]);
+
+  // Manipulador de classificação
+  const requestSort = (key: string) => {
+    let direction = "asc";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "asc"
+    ) {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  // Função para renderizar o ícone de classificação
+  const SortIcon = ({ isSorted, isAsc }) => {
+    return (
+      <span className="inline-block ml-2">
+        {isSorted ? (isAsc ? "↓" : "↑") : "↕️"}
+      </span>
+    );
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -42,7 +90,7 @@ export function Constructions() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full items-center p-3">
+    <div className="flex flex-col h-full items-center p-3 gap-2">
       <div className="bg-[#FFFFFF] flex flex-col w-full justify-between p-3 pb-6 gap-4 rounded">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row gap-3">
@@ -132,7 +180,22 @@ export function Constructions() {
               </select>
             </div>
           </div>
-          <div>Adicionar Obra</div>
+          <div className="flex flex-row justify-center align-middle items-center gap-2">
+            <Button className="flex flex-row items-center gap-2 h-10 bg-blue-600 hover:bg-blue-800 rounded text-white text-sm">
+              <img src={addIcon} width={15} />
+              Adicionar Obra
+            </Button>
+            <img
+              src={excelIcon}
+              width={35}
+              className="hover:opacity-70 cursor-pointer"
+            />
+            <img
+              src={pdfIcon}
+              width={35}
+              className="hover:opacity-70 cursor-pointer"
+            />
+          </div>
         </div>
         <div className="flex flex-row justify-between">
           <div className="flex flex-row gap-3">
@@ -144,6 +207,63 @@ export function Constructions() {
             <MdKeyboardDoubleArrowUp size={25} />
             Filtros
           </div>
+        </div>
+      </div>
+      <div className="bg-[#FFFFFF] flex flex-col h-full w-full justify-between p-3 pb-6 gap-4 rounded">
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto text-left">
+            <thead>
+              <tr>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("cliente")}
+                >
+                  CLIENTE
+                  <SortIcon
+                    isSorted={sortConfig?.key === "cliente"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th className="px-4 py-2">OBRA</th>
+                <th className="px-4 py-2">DATA INICIO</th>
+                <th className="px-4 py-2">DATA FIM</th>
+                <th className="px-4 py-2">STATUS</th>
+                <th className="px-4 py-2">VALOR DO CONTRATO</th>
+                <th className="px-4 py-2">CATEGORIA</th>
+                <th className="px-4 py-2">ÁREA</th>
+                <th className="px-4 py-2">ETAPA ATUAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedProjects.map((projeto, index) => (
+                <tr>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.cliente}
+                  </td>
+                  <td className="px-4 py-2 border-b text-sm">{projeto.obra}</td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.dataInicio}
+                  </td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.dataFim}
+                  </td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.status}
+                  </td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.valorContrato}
+                  </td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.categoria}
+                  </td>
+                  <td className="px-4 py-2 border-b text-sm">{projeto.area}</td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.etapaAtual}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
