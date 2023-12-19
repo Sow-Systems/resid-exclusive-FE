@@ -10,9 +10,33 @@ import pdfIcon from "@/assets/icons/pdf.svg";
 import addIcon from "@/assets/icons/add.svg";
 import { Button } from "@/components/button";
 import { dadosMockados } from "@/utils/mock/table";
+import { clsx } from "@/utils/classes";
+import { FaEdit } from "react-icons/fa";
+import { IoTrashBin } from "react-icons/io5";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
+
+const Pill = ({
+  status,
+  title,
+}: {
+  status: "Em andamento" | "Finalizado";
+  title: string;
+}) => {
+  return (
+    <div
+      className={clsx(
+        `text-xs px-1 py-0.5 rounded-full text-center font-semibold`,
+        status === "Em andamento"
+          ? `bg-green-200 text-green-950 `
+          : `bg-orange-400 text-orange-950`
+      )}
+    >
+      {title}
+    </div>
+  );
+};
 
 export function Constructions() {
   const [initialDate, setInitialDate] = useState();
@@ -45,7 +69,7 @@ export function Constructions() {
   } | null>(null);
 
   const sortedProjects = useMemo(() => {
-    const sortableItems = [...dadosMockados]; // Copia os dados mockados
+    const sortableItems = [...dadosMockados];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -60,7 +84,6 @@ export function Constructions() {
     return sortableItems;
   }, [dadosMockados, sortConfig]);
 
-  // Manipulador de classificação
   const requestSort = (key: string) => {
     let direction = "asc";
     if (
@@ -73,13 +96,18 @@ export function Constructions() {
     setSortConfig({ key, direction });
   };
 
-  // Função para renderizar o ícone de classificação
   const SortIcon = ({ isSorted, isAsc }) => {
     return (
       <span className="inline-block ml-2">
         {isSorted ? (isAsc ? "↓" : "↑") : "↕️"}
       </span>
     );
+  };
+
+  const [isDivVisible, setIsDivVisible] = useState(true);
+
+  const toggleDivVisibility = () => {
+    setIsDivVisible(!isDivVisible);
   };
 
   useEffect(() => {
@@ -92,7 +120,7 @@ export function Constructions() {
   return (
     <div className="flex flex-col h-full items-center p-3 gap-2">
       <div className="bg-[#FFFFFF] flex flex-col w-full justify-between p-3 pb-6 gap-4 rounded">
-        <div className="flex flex-row justify-between">
+      <div className={`${isDivVisible ? '' : 'hidden-section'} transition-all duration-500 overflow-hidden flex flex-row justify-between`}>
           <div className="flex flex-row gap-3">
             <div
               className="flex flex-col gap-1 relative"
@@ -203,7 +231,7 @@ export function Constructions() {
             <SearchBar placeholder="Procure pelo Nome da Obra" />
             <SearchBar placeholder="Procure pela Categoria" />
           </div>
-          <div className="bg-gray-300 flex items-center justify-center align-middle gap-2 rounded px-3 text-center cursor-pointer hover:bg-gray-400">
+          <div onClick={toggleDivVisibility} className="bg-gray-300 flex items-center justify-center align-middle gap-2 rounded px-3 text-center cursor-pointer hover:bg-gray-400">
             <MdKeyboardDoubleArrowUp size={25} />
             Filtros
           </div>
@@ -232,11 +260,13 @@ export function Constructions() {
                 <th className="px-4 py-2">CATEGORIA</th>
                 <th className="px-4 py-2">ÁREA</th>
                 <th className="px-4 py-2">ETAPA ATUAL</th>
+                <th className="px-4 py-2"></th>
+                <th className="px-4 py-2"></th>
               </tr>
             </thead>
             <tbody>
               {sortedProjects.map((projeto, index) => (
-                <tr>
+                <tr key={index}>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.cliente}
                   </td>
@@ -248,7 +278,12 @@ export function Constructions() {
                     {projeto.dataFim}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">
-                    {projeto.status}
+                    {projeto.status && projeto.status === "Em andamento" && (
+                      <Pill status="Em andamento" title="Em andamento" />
+                    )}
+                    {projeto.status && projeto.status === "Finalizado" && (
+                      <Pill status="Finalizado" title="Finalizado" />
+                    )}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.valorContrato}
@@ -259,6 +294,12 @@ export function Constructions() {
                   <td className="px-4 py-2 border-b text-sm">{projeto.area}</td>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.etapaAtual}
+                  </td>
+                  <td className="border-b text-sm">
+                    <FaEdit size={19} className="cursor-pointer"/>
+                  </td>
+                  <td className="border-b text-sm">
+                  <IoTrashBin size={19} className="cursor-pointer"/>
                   </td>
                 </tr>
               ))}

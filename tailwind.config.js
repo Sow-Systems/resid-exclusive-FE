@@ -24,7 +24,7 @@ export const theme = {
       fontFamily: {
         'thrifty': ['Thrifty', 'sans-serif'], // Font for the specific page
       }
-    }
+    },
   },
 };
 export const plugins = [];
