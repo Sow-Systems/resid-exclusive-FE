@@ -13,6 +13,9 @@ import { dadosMockados } from "@/utils/mock/table";
 import { clsx } from "@/utils/classes";
 import { FaEdit } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
+import { Pagination } from "@/components/pagination";
+import { Modal } from "@/components/modal";
+import { ModalClientAdd } from "@/components/modalAddConstruction";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -43,11 +46,49 @@ export function Constructions() {
   const [finalDate, setFinalDate] = useState();
   const [showInitialDatePicker, setShowInitialDatePicker] = useState(false);
   const [showFinalDatePicker, setShowFinalDatePicker] = useState(false);
-  const initialDatePickerRef = useRef(null);
-  const finalDatePickerRef = useRef(null);
+
   const [constructionStatus, setConstructionStatus] = useState("Selecione");
 
-  const handleClickOutside = (event) => {
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(dadosMockados.length);
+
+  const [clientName, setClientName] = useState("");
+  const [constructionName, setConstructionName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+
+  const [modalInfo, setModalInfo] = useState(false);
+
+  const handleModalAddConstruction = () => {
+    setModalInfo(true);
+  };
+
+  const handleSearchNameClient = (term: string) => {
+    setClientName(term);
+  };
+
+  const handleSearchConstructionClient = (term: string) => {
+    setConstructionName(term);
+  };
+
+  const handleSearchCategoryClient = (term: string) => {
+    setCategoryName(term);
+  };
+
+  const onPageChange = (pageNumber: React.SetStateAction<number>) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleItemsPerPageChange = (event: { target: { value: string } }) => {
+    const newItemsPerPage = parseInt(event.target.value, 10);
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
+
+  const initialDatePickerRef = useRef(null);
+  const finalDatePickerRef = useRef(null);
+
+  const handleClickOutside = (event: { target: unknown }) => {
     if (
       initialDatePickerRef.current &&
       !initialDatePickerRef.current.contains(event.target)
@@ -68,10 +109,21 @@ export function Constructions() {
     direction: "asc" | "desc";
   } | null>(null);
 
-  const sortedProjects = useMemo(() => {
-    const sortableItems = [...dadosMockados];
+  const filteredProjects = useMemo(() => {
+    return dadosMockados.filter((projeto) => {
+      return (
+        (clientName ? projeto.cliente.toLowerCase().includes(clientName.toLowerCase()) : true) &&
+        (constructionName ? projeto.obra.toLowerCase().includes(constructionName.toLowerCase()) : true) &&
+        (categoryName ? projeto.categoria.toLowerCase().includes(categoryName.toLowerCase()) : true) &&
+        (constructionStatus !== "Selecione" ? projeto.status === constructionStatus : true)
+      );
+    });
+  }, [clientName, constructionName, categoryName, constructionStatus, dadosMockados]);
+
+  const sortedProjectsPaginated = useMemo(() => {
+    const sortedItems = [...filteredProjects];
     if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
+      sortedItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "asc" ? -1 : 1;
         }
@@ -81,8 +133,10 @@ export function Constructions() {
         return 0;
       });
     }
-    return sortableItems;
-  }, [dadosMockados, sortConfig]);
+    const firstPageIndex = (currentPage - 1) * itemsPerPage;
+    const lastPageIndex = firstPageIndex + itemsPerPage;
+    return sortedItems.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, itemsPerPage, filteredProjects, sortConfig]);
 
   const requestSort = (key: string) => {
     let direction = "asc";
@@ -117,10 +171,23 @@ export function Constructions() {
     };
   }, []);
 
+  useEffect(() => {
+    setTotalItems(filteredProjects.length);
+    setCurrentPage(1);
+  }, [filteredProjects]);
+
+  useEffect(() => {
+    setTotalItems(dadosMockados.length);
+  }, [dadosMockados]);
+
   return (
     <div className="flex flex-col h-full items-center p-3 gap-2">
       <div className="bg-[#FFFFFF] flex flex-col w-full justify-between p-3 pb-6 gap-4 rounded">
-      <div className={`${isDivVisible ? '' : 'hidden-section'} transition-all duration-500 overflow-hidden flex flex-row justify-between`}>
+        <div
+          className={`${
+            isDivVisible ? "" : "hidden-section"
+          } transition-all duration-200 flex flex-row justify-between`}
+        >
           <div className="flex flex-row gap-3">
             <div
               className="flex flex-col gap-1 relative"
@@ -204,12 +271,12 @@ export function Constructions() {
               >
                 <option value="Selecione">Selecione</option>
                 <option value="Finalizado">Finalizado</option>
-                <option value="Em construção">Em construção</option>
+                <option value="Em andamento">Em andamento</option>
               </select>
             </div>
           </div>
           <div className="flex flex-row justify-center align-middle items-center gap-2">
-            <Button className="flex flex-row items-center gap-2 h-10 bg-blue-600 hover:bg-blue-800 rounded text-white text-sm">
+            <Button className="flex flex-row items-center gap-2 h-10 bg-blue-600 hover:bg-blue-800 rounded text-white text-sm" onClick={handleModalAddConstruction}>
               <img src={addIcon} width={15} />
               Adicionar Obra
             </Button>
@@ -227,11 +294,23 @@ export function Constructions() {
         </div>
         <div className="flex flex-row justify-between">
           <div className="flex flex-row gap-3">
-            <SearchBar placeholder="Procure pelo Nome do Cliente" />
-            <SearchBar placeholder="Procure pelo Nome da Obra" />
-            <SearchBar placeholder="Procure pela Categoria" />
+            <SearchBar
+              placeholder="Procure pelo Nome do Cliente"
+              onSearchTermChange={handleSearchNameClient}
+            />
+            <SearchBar
+              placeholder="Procure pelo Nome da Obra"
+              onSearchTermChange={handleSearchConstructionClient}
+            />
+            <SearchBar
+              placeholder="Procure pela Categoria"
+              onSearchTermChange={handleSearchCategoryClient}
+            />
           </div>
-          <div onClick={toggleDivVisibility} className="bg-gray-300 flex items-center justify-center align-middle gap-2 rounded px-3 text-center cursor-pointer hover:bg-gray-400">
+          <div
+            onClick={toggleDivVisibility}
+            className="bg-gray-300 flex items-center justify-center align-middle gap-2 rounded px-3 text-center cursor-pointer hover:bg-gray-400"
+          >
             <MdKeyboardDoubleArrowUp size={25} />
             Filtros
           </div>
@@ -265,7 +344,7 @@ export function Constructions() {
               </tr>
             </thead>
             <tbody>
-              {sortedProjects.map((projeto, index) => (
+              {sortedProjectsPaginated.map((projeto, index) => (
                 <tr key={index}>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.cliente}
@@ -296,17 +375,41 @@ export function Constructions() {
                     {projeto.etapaAtual}
                   </td>
                   <td className="border-b text-sm">
-                    <FaEdit size={19} className="cursor-pointer"/>
+                    <FaEdit size={19} className="cursor-pointer" />
                   </td>
                   <td className="border-b text-sm">
-                  <IoTrashBin size={19} className="cursor-pointer"/>
+                    <IoTrashBin size={19} className="cursor-pointer" />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <div>
+          <div className="flex flex-row gap-2 items-center justify-end">
+            <select
+              className="border p-1 rounded text-sm bg-white"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              {[10, 25, 50].map((size) => (
+                <option key={size} value={size}>
+                  {size} Linhas
+                </option>
+              ))}
+            </select>
+            <Pagination
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              onPageChange={onPageChange}
+            />
+          </div>
+        </div>
       </div>
+      <ModalClientAdd
+          modalInfo={modalInfo}
+          setModalInfo={setModalInfo}
+        />
     </div>
   );
 }
