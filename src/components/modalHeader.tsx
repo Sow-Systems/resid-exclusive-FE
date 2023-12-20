@@ -33,11 +33,11 @@ const ModalHeader = ({
   title: string;
 }) => {
   return (
-    <div className="relative flex items-center justify-center p-3">
-      <button className="absolute top-0 left-0" onClick={onClose}>
+    <div className="relative flex items-center justify-start p-3">
+      <span className="font-semibold text-lg text-colorTextButtonBlue">{title}</span>
+      <button className="absolute top-4 right-4 border-2" onClick={onClose}>
         <CloseButton />
       </button>
-      <span className="font-semibold text-base">{title}</span>
     </div>
   );
 };

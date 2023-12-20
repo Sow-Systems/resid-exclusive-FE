@@ -4,7 +4,7 @@ import { Fragment, SetStateAction } from "react";
 interface IModalProps {
   isOpen: boolean;
   setIsOpen: (value: SetStateAction<boolean>) => void;
-  children: any
+  children: React.ReactNode;
 }
 
 const Modal: React.FC<IModalProps> = ({ isOpen, setIsOpen, children }) => {
