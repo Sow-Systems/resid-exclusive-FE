@@ -14,11 +14,14 @@ import { clsx } from "@/utils/classes";
 import { FaEdit } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { Pagination } from "@/components/pagination";
-import { Modal } from "@/components/modal";
-import { ModalClientAdd } from "@/components/modalAddConstruction";
+import { ModalAddConstruction } from "@/components/modalAddConstruction";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
+
+type ProjectData = {
+  [key: string | number]: any;
+};
 
 const Pill = ({
   status,
@@ -85,10 +88,10 @@ export function Constructions() {
     setCurrentPage(1);
   };
 
-  const initialDatePickerRef = useRef(null);
-  const finalDatePickerRef = useRef(null);
+  const initialDatePickerRef = useRef<HTMLDivElement | null>(null);
+  const finalDatePickerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleClickOutside = (event: { target: unknown }) => {
+  const handleClickOutside = (event: { target: never }) => {
     if (
       initialDatePickerRef.current &&
       !initialDatePickerRef.current.contains(event.target)
@@ -105,7 +108,7 @@ export function Constructions() {
   };
 
   const [sortConfig, setSortConfig] = useState<{
-    key: string;
+    key: string | number;
     direction: "asc" | "desc";
   } | null>(null);
 
@@ -122,7 +125,7 @@ export function Constructions() {
 
   const sortedProjectsPaginated = useMemo(() => {
     const sortedItems = [...filteredProjects];
-    if (sortConfig !== null) {
+    if (sortConfig && ["cliente", "obra", "dataInicio", "dataFim"].includes(sortConfig.key)) {
       sortedItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "asc" ? -1 : 1;
@@ -138,8 +141,8 @@ export function Constructions() {
     return sortedItems.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, itemsPerPage, filteredProjects, sortConfig]);
 
-  const requestSort = (key: string) => {
-    let direction = "asc";
+  const requestSort = (key: keyof ProjectData) => {
+    let direction: "asc" | "desc" = "asc";
     if (
       sortConfig &&
       sortConfig.key === key &&
@@ -406,7 +409,7 @@ export function Constructions() {
           </div>
         </div>
       </div>
-      <ModalClientAdd
+      <ModalAddConstruction
           modalInfo={modalInfo}
           setModalInfo={setModalInfo}
         />
