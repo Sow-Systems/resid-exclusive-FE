@@ -10,7 +10,7 @@ export function DadosdaObra() {
 
   return (
     <>
-      <div className="flex flex-col bg-white m-2">
+      <div className="flex flex-col bg-white m-2 rounded-sm">
         <div className="flex flex-row gap-2 p-4 justify-between">
           <div className="flex flex-col w-4/5">
             Nome da obra
@@ -160,7 +160,7 @@ export function DadosdaObra() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white m-2">
+      <div className="flex flex-col bg-white m-2 rounded-sm">
         <div className="flex flex-row gap-2 p-4 justify-between">
           <div className="flex flex-col w-2/4">
             Endereço
@@ -215,8 +215,8 @@ export function DadosdaObra() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col bg-white m-2">
-        <div className="flex flex-row gap-2 p-4 justify-end">
+      <div className="flex flex-col bg-white m-2 rounded-sm">
+        <div className="flex flex-row gap-2 p-3 justify-end">
           <Button className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3">
             <CiFloppyDisk size={20} />
             Salvar

@@ -9,14 +9,28 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 
 import { useState } from "react";
+import { ModalDeleteRegister } from "../modalDeleteRegister";
+import { ModalSaveRegister } from "../modalSaveRegister";
 
 export function Cliente() {
   const [startDate, setStartDate] = useState(new Date());
 
+  const [deleteModalInfo, setDeleteModalInfo] = useState(false);
+
+  const handleModalRemoveRegister = () => {
+    setDeleteModalInfo(true);
+  };
+
+  const [saveModalInfo, setSaveModalInfo] = useState(false);
+
+  const handleModalSaveRegister = () => {
+    setSaveModalInfo(true);
+  };
+
   return (
     <>
-      <div className="flex flex-col bg-white m-2">
-        <div className="flex flex-row gap-2 p-4 justify-between">
+      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+        <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
           <div className="flex flex-col w-3/5">
             Nome do Cliente
             <input
@@ -44,8 +58,7 @@ export function Cliente() {
             />
           </div>
         </div>
-
-        <div className="flex flex-row gap-2 p-4 justify-between">
+        <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
           <div className="flex flex-col w-1/3">
             CPF
             <input
@@ -92,20 +105,23 @@ export function Cliente() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white m-2">
-        <div className="mb-5 mt-3 ml-4 flex flex-row justify-between">
-          <p>Contatos</p>
+      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+        <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
+          <p className="font-semibold text-lg">Contatos</p>
           <div className="flex flex-row mr-5 gap-2">
             <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
               <GoPencil size={20} color={"white"} />
             </div>
-            <div className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer">
+            <div
+              className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer"
+              onClick={handleModalRemoveRegister}
+            >
               <FaRegTrashAlt size={20} color={"white"} />
             </div>
             <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
               <FiPlus size={20} color={"white"} />
             </div>
-            <div className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer">
+            <div className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer" onClick={handleModalSaveRegister}>
               <CiFloppyDisk size={20} color={"white"} />
             </div>
           </div>
@@ -119,7 +135,7 @@ export function Cliente() {
               placeholder="Recados"
             />
           </div>
-          <div className="flex flex-col w-1/4">
+          <div className="flex flex-col ">
             Nome
             <input
               type="text"
@@ -137,7 +153,7 @@ export function Cliente() {
               locale="pt-BR"
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col w-36">
             Telefone
             <input
               type="text"
@@ -164,15 +180,108 @@ export function Cliente() {
         </div>
       </div>
 
+      {/* Terceira parte */}
 
-      <div className="flex flex-col bg-white m-2">
-        <div className="flex flex-row gap-2 p-4 justify-end">
+      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+        <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
+          <p className="font-semibold text-lg">Endereços</p>
+          <div className="flex flex-row mr-5 gap-2">
+            <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
+              <GoPencil size={20} color={"white"} />
+            </div>
+            <div className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer">
+              <FaRegTrashAlt size={20} color={"white"} onClick={handleModalRemoveRegister}/>
+            </div>
+            <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
+              <FiPlus size={20} color={"white"} />
+            </div>
+            <div className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer" onClick={handleModalSaveRegister}>
+              <CiFloppyDisk size={20} color={"white"} />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
+          <div className="flex flex-col">
+            Descrição
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="Cobranças"
+            />
+          </div>
+          <div className="flex flex-col w-full">
+            Nome
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="Logradouro"
+            />
+          </div>
+          <div className="flex flex-col w-16">
+            Nº
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="123"
+            />
+          </div>
+          <div className="flex flex-col">
+            Complemento
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="Ao lado do Pŕedio X"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-row gap-2 p-4 justify-between">
+          <div className="flex flex-col w-full">
+            Bairro
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="Bairro Alamada"
+            />
+          </div>
+          <div className="flex flex-col ">
+            CEP
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="14.095-050"
+            />
+          </div>
+          <div className="flex flex-col">
+            Cidade
+            <input
+              type="text"
+              className="border text-gray-700 rounded p-1"
+              placeholder="Tóquio"
+            />
+          </div>
+        </div>
+        <div className="flex flex-row justify-end gap-2 mb-2 mr-3 rounded-sm">
+          <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
+            <MdOutlineArrowBackIos size={20} color={"gray"} />
+          </div>
+          <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
+            <MdOutlineArrowForwardIos size={20} color={"gray"} />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+        <div className="flex flex-row gap-2 p-3 justify-end">
           <Button className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3">
             <CiFloppyDisk size={20} />
             Salvar
           </Button>
         </div>
       </div>
+      <ModalDeleteRegister modalInfo={deleteModalInfo} setModalInfo={setDeleteModalInfo} />
+      <ModalSaveRegister modalInfo={saveModalInfo} setModalInfo={setSaveModalInfo} />
+
     </>
   );
 }
