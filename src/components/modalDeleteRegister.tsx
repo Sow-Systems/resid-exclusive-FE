@@ -25,7 +25,7 @@ export const ModalDeleteRegister = ({
     <Modal isOpen={modalInfo} setIsOpen={setModalInfo}>
        <div className="flex flex-col h-full w-full bg-gray-300 rounded ">
         <span className="text-red-700 font-semibold p-2">Exclusão de Registro</span>
-        <div className="flex items-center bg-gray-100 p-1 pr-10 m-1 rounded text-red-600 h-32 text-center">
+        <div className="flex justify-center items-center bg-gray-100 p-1 m-1 rounded text-red-600 h-32 text-center">
           Deseja excluir o registro selecionado?
         </div>
         <div className="flex flex-row justify-between gap-2 p-1">

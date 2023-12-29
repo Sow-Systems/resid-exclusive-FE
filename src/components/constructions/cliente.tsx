@@ -230,7 +230,7 @@ export function Cliente() {
             <input
               type="text"
               className="border text-gray-700 rounded p-1"
-              placeholder="Ao lado do Pŕedio X"
+              placeholder="Ao lado do Prédio X"
             />
           </div>
         </div>

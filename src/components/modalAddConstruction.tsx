@@ -6,6 +6,7 @@ import ModalHeader from "./modalHeader";
 import { DadosdaObra } from "./constructions/dadosDaObra";
 import { Button } from "./button";
 import { Cliente } from "./constructions/cliente";
+import { Etapas } from "./constructions/etapas";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -19,7 +20,6 @@ export const ModalAddConstruction = ({
   modalInfo,
   setModalInfo,
 }: ModalAddConstructionProps) => {
-
   const [activeTab, setActiveTab] = useState("DadosdaObra");
 
   return (
@@ -28,25 +28,43 @@ export const ModalAddConstruction = ({
         onClose={() => setModalInfo(false)}
         title="CADASTRO DE OBRAS"
       />
-       <div className="flex flex-col h-full w-full bg-gray-200">
+      <div className="flex flex-col h-full w-full bg-gray-200">
         <div className="bg-gray-300 w-full flex flex-row gap-3 p-2">
           <Button
-            className={`text-sm ${activeTab === 'DadosdaObra' ? 'bg-blue-700 text-white' : 'text-blue-950'}`}
+            className={`text-sm ${
+              activeTab === "DadosdaObra"
+                ? "bg-blue-700 text-white"
+                : "text-blue-950"
+            }`}
             onClick={() => setActiveTab("DadosdaObra")}
           >
             Dados da Obra
           </Button>
           <Button
-            className={`text-sm ${activeTab === 'Cliente' ? 'bg-blue-700 text-white' : 'text-blue-950'}`}
+            className={`text-sm ${
+              activeTab === "Cliente"
+                ? "bg-blue-700 text-white"
+                : "text-blue-950"
+            }`}
             onClick={() => setActiveTab("Cliente")}
           >
             Cliente
           </Button>
-          <Button className=" text-blue-950 text-sm">Etapas</Button>
+          <Button
+            className={`text-sm ${
+              activeTab === "Etapas"
+                ? "bg-blue-700 text-white"
+                : "text-blue-950"
+            }`}
+            onClick={() => setActiveTab("Etapas")}
+          >
+            Etapas
+          </Button>
           <Button className=" text-blue-950 text-sm">Planejamento</Button>
         </div>
         {activeTab === "DadosdaObra" && <DadosdaObra />}
         {activeTab === "Cliente" && <Cliente />}
+        {activeTab === "Etapas" && <Etapas />}
       </div>
     </Modal>
   );
