@@ -3,12 +3,12 @@ import { Button } from "../button";
 import { CiFloppyDisk } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useState } from "react";
-import { SortableEvent } from "sortablejs";
 import { ReactSortable } from "react-sortablejs";
 
 type Etapa = {
   id: number;
   content: string;
+  selected?: boolean;
 };
 
 export function Etapas() {
@@ -22,8 +22,16 @@ export function Etapas() {
     { id: 7, content: "Muro" },
   ]);
 
-  const onSortEnd = (event: SortableEvent) => {
-    console.log("Item moved from", event.oldIndex, "to", event.newIndex);
+  const toggleSelection = (id: number) => {
+    setEtapas(
+      etapas.map((etapa) =>
+        etapa.id === id ? { ...etapa, selected: !etapa.selected } : etapa
+      )
+    );
+  };
+
+  const deleteSelected = () => {
+    setEtapas(etapas.filter((etapa) => !etapa.selected));
   };
 
   return (
@@ -37,7 +45,10 @@ export function Etapas() {
             </Button>
           </div>
           <div className="flex flex-col">
-            <Button className="bg-red-700 hover:bg-red-800 text-white flex flex-row gap-3 text-center align-middle justify-center items-center w-36 h-10 rounded-md">
+            <Button
+              onClick={deleteSelected}
+              className="bg-red-700 hover:bg-red-800 text-white flex flex-row gap-3 text-center align-middle justify-center items-center w-36 h-10 rounded-md"
+            >
               <FaRegTrashAlt size={15} color={"white"} />
               <p className="text-sm">Excluir</p>
             </Button>
@@ -45,22 +56,24 @@ export function Etapas() {
         </div>
 
         <ReactSortable
-        list={etapas}
-        setList={setEtapas}
-        animation={150}
-        className="grid grid-cols-4 gap-2 p-4 auto-rows-fr"
-        onEnd={onSortEnd}
-      >
-        {etapas.map((etapa) => (
-          <div
-            key={etapa.id}
-            className="bg-gray-300 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md"
-          >
-            <span className="font-bold text-xl mr-3">{etapa.id}</span>
-            <span>{etapa.content}</span>
-          </div>
-        ))}
-      </ReactSortable>
+          list={etapas}
+          setList={setEtapas}
+          animation={150}
+          className="grid grid-cols-4 gap-2 p-4 auto-rows-fr"
+        >
+          {etapas.map((etapa) => (
+            <div
+              key={etapa.id}
+              onClick={() => toggleSelection(etapa.id)}
+              className={`bg-gray-300 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md ${
+                etapa.selected ? "bg-blue-900 text-white" : ""
+              }`}
+            >
+              <span className="font-bold text-xl mr-3">{etapa.id}</span>
+              <span>{etapa.content}</span>
+            </div>
+          ))}
+        </ReactSortable>
       </div>
 
       <div className="flex flex-col bg-white m-2 rounded-sm">
