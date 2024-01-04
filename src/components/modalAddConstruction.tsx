@@ -28,7 +28,7 @@ export const ModalAddConstruction = ({
         onClose={() => setModalInfo(false)}
         title="CADASTRO DE OBRAS"
       />
-      <div className="flex flex-col h-full w-full bg-gray-200">
+      <div className="flex flex-col bg-gray-200 overflow-y-auto w-[969px] h-[780px]">
         <div className="bg-gray-300 w-full flex flex-row gap-3 p-2">
           <Button
             className={`text-sm ${

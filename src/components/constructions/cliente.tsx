@@ -33,7 +33,7 @@ export function Cliente() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-sm">
         <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
           <div className="flex flex-col w-3/5">
             Nome do Cliente
@@ -49,7 +49,7 @@ export function Cliente() {
               selected={startDate}
               onChange={(date) => setStartDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-44 p-[6px] text-center text-sm border rounded"
+              className="w-full p-1 text-center text-sm border rounded"
               locale="pt-BR"
             />
           </div>
@@ -67,7 +67,7 @@ export function Cliente() {
             CPF
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-52"
               placeholder="123.135.456-08"
             />
           </div>
@@ -75,7 +75,7 @@ export function Cliente() {
             CNPJ
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-52"
               placeholder="01.12.456/0001-01"
             />
           </div>
@@ -83,7 +83,7 @@ export function Cliente() {
             E-mail
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-52"
               placeholder="ex: cliente@cliente.com.br"
             />
           </div>
@@ -109,9 +109,11 @@ export function Cliente() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+      {/* Segunda parte */}
+
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-sm">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
-          <p className="font-semibold text-lg">Contatos</p>
+          <p className="font-semibold">Contatos</p>
           <div className="flex flex-row mr-5 gap-2">
             <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
               <GoPencil size={20} color={"white"} />
@@ -125,7 +127,10 @@ export function Cliente() {
             <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
               <FiPlus size={20} color={"white"} />
             </div>
-            <div className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer" onClick={handleModalSaveRegister}>
+            <div
+              className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer"
+              onClick={handleModalSaveRegister}
+            >
               <CiFloppyDisk size={20} color={"white"} />
             </div>
           </div>
@@ -135,7 +140,7 @@ export function Cliente() {
             Descrição
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-32"
               placeholder="Recados"
             />
           </div>
@@ -143,7 +148,7 @@ export function Cliente() {
             Nome
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-52"
               placeholder="Gilberto Barros"
             />
           </div>
@@ -153,15 +158,15 @@ export function Cliente() {
               selected={startDate}
               onChange={(date) => setStartDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-44 p-[6px] text-center text-sm border rounded"
+              className="w-44 p-1 text-center text-sm border rounded"
               locale="pt-BR"
             />
           </div>
-          <div className="flex flex-col w-36">
+          <div className="flex flex-col ">
             Telefone
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-36"
               placeholder="(16) 98956-5656"
             />
           </div>
@@ -169,7 +174,7 @@ export function Cliente() {
             E-mail
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-52"
               placeholder="ex: cliente@cliente.com.br"
             />
           </div>
@@ -186,20 +191,27 @@ export function Cliente() {
 
       {/* Terceira parte */}
 
-      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-sm">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
-          <p className="font-semibold text-lg">Endereços</p>
+          <p className="font-semibold">Endereços</p>
           <div className="flex flex-row mr-5 gap-2">
             <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
               <GoPencil size={20} color={"white"} />
             </div>
             <div className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer">
-              <FaRegTrashAlt size={20} color={"white"} onClick={handleModalRemoveRegister}/>
+              <FaRegTrashAlt
+                size={20}
+                color={"white"}
+                onClick={handleModalRemoveRegister}
+              />
             </div>
             <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
               <FiPlus size={20} color={"white"} />
             </div>
-            <div className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer" onClick={handleModalSaveRegister}>
+            <div
+              className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer"
+              onClick={handleModalSaveRegister}
+            >
               <CiFloppyDisk size={20} color={"white"} />
             </div>
           </div>
@@ -233,7 +245,7 @@ export function Cliente() {
             Complemento
             <input
               type="text"
-              className="border text-gray-700 rounded p-1"
+              className="border text-gray-700 rounded p-1 w-52"
               placeholder="Ao lado do Prédio X"
             />
           </div>
@@ -275,18 +287,23 @@ export function Cliente() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
-        <div className="flex flex-row gap-2 p-3 justify-end">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm">
+        <div className="flex flex-row gap-2 p-1 justify-end">
           <Button className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3">
             <CiFloppyDisk size={20} />
             Salvar
           </Button>
         </div>
       </div>
-      <ModalDeleteRegister modalInfo={deleteModalInfo} setModalInfo={setDeleteModalInfo}   onDeleteConfirm={handleDeleteItem}
- />
-      <ModalSaveRegister modalInfo={saveModalInfo} setModalInfo={setSaveModalInfo} />
-
+      <ModalDeleteRegister
+        modalInfo={deleteModalInfo}
+        setModalInfo={setDeleteModalInfo}
+        onDeleteConfirm={handleDeleteItem}
+      />
+      <ModalSaveRegister
+        modalInfo={saveModalInfo}
+        setModalInfo={setSaveModalInfo}
+      />
     </>
   );
 }

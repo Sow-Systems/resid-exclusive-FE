@@ -36,7 +36,7 @@ export function Etapas() {
 
   return (
     <>
-      <div className="flex flex-col bg-white m-2 rounded-sm">
+      <div className="flex flex-col bg-white m-2 rounded-sm h-full">
         <div className="flex flex-row gap-5 px-4 py-2">
           <div className="flex flex-col">
             <Button className="bg-green-700 hover:bg-green-800 text-white flex flex-row gap-3 text-center align-middle justify-center items-center h-10 rounded-md">
