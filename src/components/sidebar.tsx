@@ -33,7 +33,7 @@ function isActiveClassWithOptions() {
 export function Sidebar() {
   const [expanded, setExpanded] = useState(false);
   const [insideLinkFuncionariosExpanded, setInsideLinkFuncionariosExpanded] = useState(false);
-  const [insideLinkObrasExpanded, setInsideLinkObrasExpanded] = useState(false);
+  // const [insideLinkObrasExpanded, setInsideLinkObrasExpanded] = useState(false);
   const [insideLinkTerceirosExpanded, setInsideLinkTerceirosExpanded] = useState(false);
   const [activeOption, setActiveOption] = useState("Home");
 
@@ -45,13 +45,13 @@ export function Sidebar() {
     setExpanded(false);
   };
 
-  const handleMouseEnterObras = () => {
-    setInsideLinkObrasExpanded(true);
-  };
+  // const handleMouseEnterObras = () => {
+  //   setInsideLinkObrasExpanded(true);
+  // };
 
-  const handleMouseLeaveObras = () => {
-    setInsideLinkObrasExpanded(false);
-  };
+  // const handleMouseLeaveObras = () => {
+  //   setInsideLinkObrasExpanded(false);
+  // };
 
   const handleMouseEnterFuncionarios = () => {
     setInsideLinkFuncionariosExpanded(true);
@@ -83,11 +83,11 @@ export function Sidebar() {
     expanded ? "visible mt-2 flex flex-col ml-5" : "hidden"
   }`;
 
-  const SUB_OPTION_OBRAS_CLASS = `${
-    insideLinkObrasExpanded
-      ? "visible transition-opacity duration-300 ease-in-out opacity-100 text-sm"
-      : "hidden"
-  }`;
+  // const SUB_OPTION_OBRAS_CLASS = `${
+  //   insideLinkObrasExpanded
+  //     ? "visible transition-opacity duration-300 ease-in-out opacity-100 text-sm"
+  //     : "hidden"
+  // }`;
 
   const SUB_OPTION_FUNCIONARIOS_CLASS = `${
     insideLinkFuncionariosExpanded
@@ -128,29 +128,15 @@ export function Sidebar() {
             <p className={SIDEBAR_CLASSES}>Home</p>
           </NavLink>
 
-          <div
+          <NavLink
             className={NAV_LINK_CLASS}
-            style={activeOption === "Obras" ? isActiveClassWithOptions() : {}}
-            onMouseEnter={handleMouseEnterObras}
-            onMouseLeave={handleMouseLeaveObras}
+            to="/constructions"
+            style={isActiveClass}
+            onClick={() => setActiveOption("Obras")}
           >
-            <div className="flex flex-row justify-around">
-              <div className="flex items-start">
                 <img src={constructionIcon} />
-              </div>
-              <div className={SUB_TITLE_OPTION_CLASS}>
-                <p className={SIDEBAR_CLASSES}>Obras</p>
-                <NavLink
-                  className={SUB_OPTION_OBRAS_CLASS}
-                  to="/constructions"
-                  style={isActiveClass}
-                  onClick={() => setActiveOption("Obras")}
-                >
-                  Orçamentos
-                </NavLink>
-              </div>
-            </div>
-          </div>
+            <p className={SIDEBAR_CLASSES}>Obras</p>
+          </NavLink>
 
           <NavLink
             className={NAV_LINK_CLASS}
@@ -172,7 +158,7 @@ export function Sidebar() {
           >
             <div className="flex flex-row justify-around">
               <div className="flex items-start">
-                <img src={employeesIcon} width={35} />
+                <img src={employeesIcon} width={35} height={35}/>
               </div>
               <div className={SUB_TITLE_OPTION_CLASS}>
                 <p className={SIDEBAR_CLASSES}>Funcionários</p>

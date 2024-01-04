@@ -27,6 +27,10 @@ export function Cliente() {
     setSaveModalInfo(true);
   };
 
+  const handleDeleteItem = () => {
+    setDeleteModalInfo(false);
+  };
+
   return (
     <>
       <div className="flex flex-col bg-white mx-2 my-1 rounded-sm">
@@ -279,7 +283,8 @@ export function Cliente() {
           </Button>
         </div>
       </div>
-      <ModalDeleteRegister modalInfo={deleteModalInfo} setModalInfo={setDeleteModalInfo} />
+      <ModalDeleteRegister modalInfo={deleteModalInfo} setModalInfo={setDeleteModalInfo}   onDeleteConfirm={handleDeleteItem}
+ />
       <ModalSaveRegister modalInfo={saveModalInfo} setModalInfo={setSaveModalInfo} />
 
     </>

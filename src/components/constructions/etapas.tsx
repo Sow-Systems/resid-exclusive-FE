@@ -66,7 +66,7 @@ export function Etapas() {
               key={etapa.id}
               onClick={() => toggleSelection(etapa.id)}
               className={`bg-gray-300 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md ${
-                etapa.selected ? "bg-blue-900 text-white" : ""
+                etapa.selected ? "bg-blue-300 text-white" : ""
               }`}
             >
               <span className="font-bold text-xl mr-3">{etapa.id}</span>

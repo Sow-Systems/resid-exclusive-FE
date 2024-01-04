@@ -10,11 +10,12 @@ import pdfIcon from "@/assets/icons/pdf.svg";
 import addIcon from "@/assets/icons/add.svg";
 import { Button } from "@/components/button";
 import { dadosMockados } from "@/utils/mock/table";
-import { clsx } from "@/utils/classes";
 import { FaEdit } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { Pagination } from "@/components/pagination";
 import { ModalAddConstruction } from "@/components/modalAddConstruction";
+import { ModalDeleteRegister } from "@/components/modalDeleteRegister";
+import { Pill } from "@/utils/pill";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -23,32 +24,14 @@ type ProjectData = {
   [key: string | number]: any;
 };
 
-const Pill = ({
-  status,
-  title,
-}: {
-  status: "Em andamento" | "Finalizado";
-  title: string;
-}) => {
-  return (
-    <div
-      className={clsx(
-        `text-xs px-1 py-0.5 rounded-full text-center font-semibold`,
-        status === "Em andamento"
-          ? `bg-green-200 text-green-950 `
-          : `bg-orange-400 text-orange-950`
-      )}
-    >
-      {title}
-    </div>
-  );
-};
 
 export function Constructions() {
-  const [initialDate, setInitialDate] = useState();
-  const [finalDate, setFinalDate] = useState();
+  const [initialDate, setInitialDate] = useState<Date | null>(null);
+  const [finalDate, setFinalDate] = useState<Date | null>(null);
   const [showInitialDatePicker, setShowInitialDatePicker] = useState(false);
   const [showFinalDatePicker, setShowFinalDatePicker] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [projects, setProjects] = useState(dadosMockados);
 
   const [constructionStatus, setConstructionStatus] = useState("Selecione");
 
@@ -61,6 +44,8 @@ export function Constructions() {
   const [categoryName, setCategoryName] = useState("");
 
   const [modalInfo, setModalInfo] = useState(false);
+
+  const [deleteModalInfo, setDeleteModalInfo] = useState(false);
 
   const handleModalAddConstruction = () => {
     setModalInfo(true);
@@ -113,19 +98,53 @@ export function Constructions() {
   } | null>(null);
 
   const filteredProjects = useMemo(() => {
-    return dadosMockados.filter((projeto) => {
+    return projects.filter((projeto) => {
+      const dataInicioProjeto = new Date(projeto.dataInicio);
+      const dataFimProjeto = new Date(projeto.dataFim);
+
       return (
-        (clientName ? projeto.cliente.toLowerCase().includes(clientName.toLowerCase()) : true) &&
-        (constructionName ? projeto.obra.toLowerCase().includes(constructionName.toLowerCase()) : true) &&
-        (categoryName ? projeto.categoria.toLowerCase().includes(categoryName.toLowerCase()) : true) &&
-        (constructionStatus !== "Selecione" ? projeto.status === constructionStatus : true)
+        (clientName
+          ? projeto.cliente.toLowerCase().includes(clientName.toLowerCase())
+          : true) &&
+        (constructionName
+          ? projeto.obra.toLowerCase().includes(constructionName.toLowerCase())
+          : true) &&
+        (categoryName
+          ? projeto.categoria.toLowerCase().includes(categoryName.toLowerCase())
+          : true) &&
+        (constructionStatus !== "Selecione"
+          ? projeto.status === constructionStatus
+          : true) &&
+        (!initialDate || dataInicioProjeto >= initialDate) &&
+        (!finalDate || dataFimProjeto <= finalDate)
       );
     });
-  }, [clientName, constructionName, categoryName, constructionStatus, dadosMockados]);
+  }, [
+    projects,
+    clientName,
+    constructionName,
+    categoryName,
+    constructionStatus,
+    initialDate,
+    finalDate,
+  ]);
 
   const sortedProjectsPaginated = useMemo(() => {
     const sortedItems = [...filteredProjects];
-    if (sortConfig && ["cliente", "obra", "dataInicio", "dataFim"].includes(sortConfig.key)) {
+    if (
+      sortConfig &&
+      [
+        "cliente",
+        "obra",
+        "dataInicio",
+        "dataFim",
+        "status",
+        "valorContrato",
+        "categoria",
+        "area",
+        "etapaAtual",
+      ].includes(sortConfig.key)
+    ) {
       sortedItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "asc" ? -1 : 1;
@@ -166,6 +185,18 @@ export function Constructions() {
   const toggleDivVisibility = () => {
     setIsDivVisible(!isDivVisible);
   };
+
+  const handleShowDeleteModal = (itemId) => {
+    setSelectedItemId(itemId);
+    setDeleteModalInfo(true);
+  };
+
+  const handleDeleteItem = () => {
+    const updatedProjects = projects.filter(projeto => projeto.id !== selectedItemId);
+    setProjects(updatedProjects);
+    setDeleteModalInfo(false);
+  };
+
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -279,7 +310,10 @@ export function Constructions() {
             </div>
           </div>
           <div className="flex flex-row justify-center align-middle items-center gap-2">
-            <Button className="flex flex-row items-center gap-2 h-10 bg-blue-600 hover:bg-blue-800 rounded text-white text-sm" onClick={handleModalAddConstruction}>
+            <Button
+              className="flex flex-row items-center gap-2 h-10 bg-blue-600 hover:bg-blue-800 rounded text-white text-sm"
+              onClick={handleModalAddConstruction}
+            >
               <img src={addIcon} width={15} />
               Adicionar Obra
             </Button>
@@ -334,30 +368,102 @@ export function Constructions() {
                     isAsc={sortConfig?.direction === "asc"}
                   />
                 </th>
-                <th className="px-4 py-2">OBRA</th>
-                <th className="px-4 py-2">DATA INICIO</th>
-                <th className="px-4 py-2">DATA FIM</th>
-                <th className="px-4 py-2">STATUS</th>
-                <th className="px-4 py-2">VALOR DO CONTRATO</th>
-                <th className="px-4 py-2">CATEGORIA</th>
-                <th className="px-4 py-2">ÁREA</th>
-                <th className="px-4 py-2">ETAPA ATUAL</th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("obra")}
+                >
+                  OBRA
+                  <SortIcon
+                    isSorted={sortConfig?.key === "obra"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("dataInicio")}
+                >
+                  DATA INICIO
+                  <SortIcon
+                    isSorted={sortConfig?.key === "dataInicio"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("dataFim")}
+                >
+                  DATA FIM
+                  <SortIcon
+                    isSorted={sortConfig?.key === "dataFim"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("status")}
+                >
+                  STATUS
+                  <SortIcon
+                    isSorted={sortConfig?.key === "status"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("valorContrato")}
+                >
+                  VALOR DO CONTRATO
+                  <SortIcon
+                    isSorted={sortConfig?.key === "valorContrato"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("categoria")}
+                >
+                  CATEGORIA
+                  <SortIcon
+                    isSorted={sortConfig?.key === "categoria"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("area")}
+                >
+                  ÁREA
+                  <SortIcon
+                    isSorted={sortConfig?.key === "area"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
+                <th
+                  className="px-4 py-2 cursor-pointer"
+                  onClick={() => requestSort("etapaAtual")}
+                >
+                  ETAPA ATUAL
+                  <SortIcon
+                    isSorted={sortConfig?.key === "etapaAtual"}
+                    isAsc={sortConfig?.direction === "asc"}
+                  />
+                </th>
                 <th className="px-4 py-2"></th>
                 <th className="px-4 py-2"></th>
               </tr>
             </thead>
             <tbody>
-              {sortedProjectsPaginated.map((projeto, index) => (
-                <tr key={index}>
+              {sortedProjectsPaginated.map((projeto) => (
+                <tr key={projeto.id}>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.cliente}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">{projeto.obra}</td>
                   <td className="px-4 py-2 border-b text-sm">
-                    {projeto.dataInicio}
+                    {projeto.dataInicio.toLocaleDateString("pt-BR")}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">
-                    {projeto.dataFim}
+                    {projeto.dataFim.toLocaleDateString("pt-BR")}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.status && projeto.status === "Em andamento" && (
@@ -368,12 +474,18 @@ export function Constructions() {
                     )}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">
-                    {projeto.valorContrato}
+                    R$:{" "}
+                    {new Intl.NumberFormat("pt-BR", {
+                      style: "decimal",
+                      minimumFractionDigits: 2,
+                    }).format(projeto.valorContrato)}
                   </td>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.categoria}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">{projeto.area}</td>
+                  <td className="px-4 py-2 border-b text-sm">
+                    {projeto.area} m²
+                  </td>
                   <td className="px-4 py-2 border-b text-sm">
                     {projeto.etapaAtual}
                   </td>
@@ -381,7 +493,11 @@ export function Constructions() {
                     <FaEdit size={19} className="cursor-pointer" />
                   </td>
                   <td className="border-b text-sm">
-                    <IoTrashBin size={19} className="cursor-pointer" />
+                    <IoTrashBin
+                      size={19}
+                      className="cursor-pointer"
+                      onClick={() => handleShowDeleteModal(projeto.id)}
+                      />
                   </td>
                 </tr>
               ))}
@@ -409,10 +525,12 @@ export function Constructions() {
           </div>
         </div>
       </div>
-      <ModalAddConstruction
-          modalInfo={modalInfo}
-          setModalInfo={setModalInfo}
-        />
+      <ModalAddConstruction modalInfo={modalInfo} setModalInfo={setModalInfo} />
+      <ModalDeleteRegister
+        modalInfo={deleteModalInfo}
+        setModalInfo={setDeleteModalInfo}
+        onDeleteConfirm={handleDeleteItem}
+      />
     </div>
   );
 }

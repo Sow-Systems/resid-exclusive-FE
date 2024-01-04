@@ -92,8 +92,8 @@ export function DadosdaObra() {
               locale="pt-BR"
             />
           </div>
-          <div className="flex flex-col">
-            Data de Início
+          <div className="flex flex-col items-center">
+            Data Fim
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date!)}
