@@ -12,6 +12,7 @@ setDefaultLocale("pt-BR");
 interface ModalAddEtapaProps {
   modalInfo: boolean;
   setModalInfo: (value: SetStateAction<boolean>) => void;
+  onAddEtapas: (etapas: Etapa[]) => void;
 }
 
 type Etapa = {
@@ -23,19 +24,17 @@ type Etapa = {
 export const ModalAddEtapa = ({
   modalInfo,
   setModalInfo,
+  onAddEtapas,
 }: ModalAddEtapaProps) => {
-  const handleModalInfo = () => {
-    setModalInfo(false);
-  };
 
   const [etapas, setEtapas] = useState<Etapa[]>([
-    { id: 1, content: "Pintura" },
-    { id: 2, content: "Piscina" },
-    { id: 3, content: "Terraplanagem" },
-    { id: 4, content: "Estrutura" },
-    { id: 5, content: "Telhado" },
-    { id: 6, content: "Esquadrias" },
-    { id: 7, content: "Limpeza" },
+    { id: 8, content: "Pintura" },
+    { id: 9, content: "Piscina" },
+    { id: 10, content: "Terraplanagem" },
+    { id: 11, content: "Estrutura" },
+    { id: 12, content: "Telhado" },
+    { id: 13, content: "Esquadrias" },
+    { id: 14, content: "Limpeza" },
   ]);
 
   const toggleSelection = (id: number) => {
@@ -44,6 +43,12 @@ export const ModalAddEtapa = ({
         etapa.id === id ? { ...etapa, selected: !etapa.selected } : etapa
       )
     );
+  };
+
+  const handleAddEtapas = () => {
+    const selectedEtapas = etapas.filter(etapa => etapa.selected);
+    onAddEtapas(selectedEtapas);
+    setModalInfo(false);
   };
 
   return (
@@ -62,7 +67,7 @@ export const ModalAddEtapa = ({
                 <div
                   key={etapa.id}
                   onClick={() => toggleSelection(etapa.id)}
-                  className={`bg-gray-300 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md ${
+                  className={`border-2 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md ${
                     etapa.selected ? "bg-blue-400 text-white" : ""
                   }`}
                 >
@@ -71,19 +76,19 @@ export const ModalAddEtapa = ({
               ))}
             </div>
           </div>
-          </div>
+        </div>
 
-          <div className="flex flex-col bg-white mt-2 rounded-sm">
-            <div className="flex flex-row gap-2 p-3 justify-end">
-              <Button
-                className="bg-green-800 hover:bg-green-900 text-white flex flex-row gap-3 w-32 text-center align-middle justify-center items-center"
-                onClick={handleModalInfo}
-              >
-                <ImCheckmark2 size={20} />
-                Incluir
-              </Button>
-            </div>
+        <div className="flex flex-col bg-white mt-2 rounded-sm">
+          <div className="flex flex-row gap-2 p-3 justify-end">
+            <Button
+              className="bg-green-800 hover:bg-green-900 text-white flex flex-row gap-3 w-32 text-center align-middle justify-center items-center"
+              onClick={handleAddEtapas}
+            >
+              <ImCheckmark2 size={20} />
+              Incluir
+            </Button>
           </div>
+        </div>
       </div>
     </Modal>
   );

@@ -5,8 +5,8 @@ import { CiFloppyDisk } from "react-icons/ci";
 import { useState } from "react";
 
 export function DadosdaObra() {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   return (
     <>
@@ -90,6 +90,7 @@ export function DadosdaObra() {
               dateFormat="dd/MM/yyyy"
               className="w-32 p-1 text-center text-sm border rounded"
               locale="pt-BR"
+              placeholderText="ex: 29/04/2022"
             />
           </div>
           <div className="flex flex-col items-center">
@@ -101,6 +102,7 @@ export function DadosdaObra() {
               className="w-32 p-1 text-center text-sm border rounded"
               minDate={startDate}
               locale="pt-BR"
+              placeholderText="ex: 01/05/2023"
             />
           </div>
           <div className="flex flex-col">

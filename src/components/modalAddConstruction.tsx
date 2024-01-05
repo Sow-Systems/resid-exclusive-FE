@@ -7,6 +7,7 @@ import { DadosdaObra } from "./constructions/dadosDaObra";
 import { Button } from "./button";
 import { Cliente } from "./constructions/cliente";
 import { Etapas } from "./constructions/etapas";
+import { Planejamento } from "./constructions/planejamento";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -60,11 +61,22 @@ export const ModalAddConstruction = ({
           >
             Etapas
           </Button>
-          <Button className=" text-blue-950 text-sm">Planejamento</Button>
+          <Button
+            className={`text-sm ${
+              activeTab === "Planejamento"
+                ? "bg-blue-700 text-white"
+                : "text-blue-950"
+            }`}
+            onClick={() => setActiveTab("Planejamento")}
+          >
+            Planejamento
+          </Button>
         </div>
         {activeTab === "DadosdaObra" && <DadosdaObra />}
         {activeTab === "Cliente" && <Cliente />}
         {activeTab === "Etapas" && <Etapas />}
+        {activeTab === "Planejamento" && <Planejamento />}
+
       </div>
     </Modal>
   );

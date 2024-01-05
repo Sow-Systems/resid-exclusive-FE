@@ -23,6 +23,10 @@ export function Etapas() {
     { id: 7, content: "Muro" },
   ]);
 
+  const addEtapas = (newEtapas: Etapa[]) => {
+    setEtapas([...etapas, ...newEtapas]);
+  };
+
   const toggleSelection = (id: number) => {
     setEtapas(
       etapas.map((etapa) =>
@@ -43,8 +47,8 @@ export function Etapas() {
 
   return (
     <>
-      <div className="flex flex-col bg-white m-2 rounded-sm h-full">
-        <div className="flex flex-row gap-5 px-4 py-2">
+      <div className="flex flex-col bg-white m-1 rounded-sm h-full">
+        <div className="flex flex-row gap-2 p-4 justify-start">
           <div className="flex flex-col">
             <Button
               className="bg-green-700 hover:bg-green-800 text-white flex flex-row gap-3 text-center align-middle justify-center items-center h-10 rounded-md"
@@ -79,7 +83,7 @@ export function Etapas() {
             <div
               key={etapa.id}
               onClick={() => toggleSelection(etapa.id)}
-              className={`bg-gray-300 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md ${
+              className={`border-2 hover:bg-blue-300 flex justify-center items-center cursor-pointer px-6 py-5 rounded-md ${
                 etapa.selected ? "bg-blue-400 text-white" : ""
               }`}
             >
@@ -90,8 +94,8 @@ export function Etapas() {
         </ReactSortable>
       </div>
 
-      <div className="flex flex-col bg-white m-2 rounded-sm">
-        <div className="flex flex-row gap-2 p-3 justify-end">
+      <div className="flex flex-col bg-white m-1 rounded-sm">
+        <div className="flex flex-row gap-2 p-1 justify-end">
           <Button className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3">
             <CiFloppyDisk size={20} />
             Salvar
@@ -101,6 +105,7 @@ export function Etapas() {
       <ModalAddEtapa
         modalInfo={addEtapaModal}
         setModalInfo={setAddEtapaModal}
+        onAddEtapas={addEtapas}
       />
     </>
   );

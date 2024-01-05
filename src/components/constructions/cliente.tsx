@@ -13,7 +13,9 @@ import { ModalDeleteRegister } from "../modalDeleteRegister";
 import { ModalSaveRegister } from "../modalSaveRegister";
 
 export function Cliente() {
-  const [startDate, setStartDate] = useState(new Date());
+  const [birthDateContact, setBirthDateContact] = useState<Date | null>(null);
+
+  const [birthDateClient, setBirthDateClient] = useState<Date | null>(null);
 
   const [deleteModalInfo, setDeleteModalInfo] = useState(false);
 
@@ -46,11 +48,12 @@ export function Cliente() {
           <div className="flex flex-col w-1/5 justify-center items-center">
             Data de Nascimento
             <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date!)}
+              selected={birthDateClient}
+              onChange={(date) => setBirthDateClient(date!)}
               dateFormat="dd/MM/yyyy"
               className="w-full p-1 text-center text-sm border rounded"
               locale="pt-BR"
+              placeholderText="ex: 29/04/1992"
             />
           </div>
           <div className="flex flex-col w-1/5">
@@ -155,11 +158,12 @@ export function Cliente() {
           <div className="flex flex-col justify-center items-center">
             Data de Nascimento
             <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date!)}
+              selected={birthDateContact}
+              onChange={(date) => setBirthDateContact(date!)}
               dateFormat="dd/MM/yyyy"
               className="w-44 p-1 text-center text-sm border rounded"
               locale="pt-BR"
+              placeholderText="ex: 29/04/1992"
             />
           </div>
           <div className="flex flex-col ">
