@@ -84,13 +84,13 @@ export function Home() {
   });
 
   return (
-    <div className="flex h-full p-5">
-      <div className="flex flex-col w-full gap-5">
-        <div className="flex flex-row justify-between gap-5">
-          <Card className="w-full h-40">
-            <div className="flex flex-row p-4 h-full">
+    <div className="flex h-full p-3">
+      <div className="flex flex-col w-full gap-2 xl:gap-3">
+        <div className="flex flex-row justify-between gap-2 xl:gap-5">
+          <Card className="w-full h-32 xl:h-40">
+            <div className="flex flex-row p-5 xl:p-4 h-full">
               <div className="flex flex-col justify-around">
-                <p className="text-sm font-medium mb-7 mr-4">
+                <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Contas à Pagar Vencidas
                 </p>
                 <p className="text-[#FF0000] text-4xl">26</p>
@@ -103,10 +103,10 @@ export function Home() {
               />
             </div>
           </Card>
-          <Card className="w-full">
+          <Card className="w-full h-32 xl:h-40">
             <div className="flex flex-row p-4  h-full">
             <div className="flex flex-col justify-around">
-                <p className="text-sm font-medium mb-7 mr-4">
+                <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Contas à Receber Pendencias
                 </p>
                 <p className="text-[#1300E9] text-4xl">5</p>
@@ -119,10 +119,10 @@ export function Home() {
               />
             </div>
           </Card>
-          <Card className="w-full">
+          <Card className="w-full h-32 xl:h-40">
             <div className="flex flex-row p-4 h-full">
             <div className="flex flex-col justify-around">
-                <p className="text-sm font-medium mb-7 mr-4">
+                <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Folhas de Pagamento em Aberto
                 </p>
                 <p className="text-[#FF5D02] text-4xl">15</p>
@@ -130,10 +130,10 @@ export function Home() {
               <img src={PayCheck} alt="Contas a Pagar" height={50} width={50} />
             </div>
           </Card>
-          <Card className="w-full">
+          <Card className="w-full h-32 xl:h-40">
             <div className="flex flex-row p-4 h-full">
             <div className="flex flex-col justify-around">
-                <p className="text-sm font-medium mb-7 mr-4">
+                <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Folhas de Pagamento em Aberto
                 </p>
                 <p className="text-[#FF5D02] text-4xl">15</p>
@@ -151,7 +151,7 @@ export function Home() {
 
             <div className="flex w-full overflow-y-auto">
               <table className="border-collapse w-full ml-3 mr-3">
-                <thead className="text-[#64748B] text-sm font-light text-left">
+                <thead className="text-[#64748B] text-xs xl:text-sm font-light text-left">
                   <tr>
                     <th
                       className="p-2 pl-4 cursor-pointer items-center gap-2 w-1/6"
@@ -235,7 +235,7 @@ export function Home() {
                   {sortedDueAccountsFirstTable.map((conta) => (
                     <tr
                       key={conta.id}
-                      className="text-left text-[#191D23] font-normal text-sm"
+                      className="text-left text-[#191D23] font-normal text-xs xl:text-sm"
                     >
                       <td className="border-b border-t p-3">
                         {conta.description}
@@ -277,7 +277,7 @@ export function Home() {
 
             <div className="flex w-full overflow-y-auto">
               <table className="border-collapse w-full ml-3 mr-3">
-                <thead className="text-[#64748B] text-sm font-light text-left">
+                <thead className="text-[#64748B] text-xs xl:text-sm font-light text-left">
                   <tr>
                     <th
                       className="p-2 pl-4 cursor-pointer items-center gap-2 w-1/6"
@@ -355,7 +355,7 @@ export function Home() {
                   {sortedDueAccountsSecondTable.map((conta) => (
                     <tr
                       key={conta.id}
-                      className="text-left text-[#191D23] font-normal text-sm"
+                      className="text-left text-[#191D23] font-normal text-xs xl:text-sm"
                     >
                       <td className="border-b border-t p-3">{conta.client}</td>
                       <td className="border-b border-t p-3">
@@ -390,9 +390,9 @@ export function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 pl-5">
+      <div className="flex flex-col gap-3 pl-3 xl:pl-5">
         <div>
-          <Card className="w-72 h-80 flex p-4">
+          <Card className="w-60 xl:w-72 h-80 flex p-3 xl:pl-4">
             <p className="mb-5 border-b border-black p-2 pb-3 font-bold text-base w-full text-center">
               Aniversáriantes do dia
             </p>
@@ -418,7 +418,7 @@ export function Home() {
           </Card>
         </div>
         <div className="h-screen pb-2">
-          <Card className="flex p-4 min-h-[610px] max-h-[610px]">
+          <Card className="flex p-3 xl:pl-4 min-h-[610px] max-h-[610px]">
             <p className="mb-5 border-b border-black p-2 pb-3 font-bold text-base w-full text-center">
               Aniversáriantes do Mês
             </p>

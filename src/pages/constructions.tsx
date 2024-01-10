@@ -227,12 +227,12 @@ export function Constructions() {
               className="flex flex-col gap-1 relative"
               ref={initialDatePickerRef}
             >
-              <p className="text-black font-semibold">Data de Início</p>
+              <p className="text-black font-semibold text-sm xl:text-base">Data de Início</p>
               <div
                 className="px-2 py-1 flex justify-between items-center text-center gap-1 flex-row font-medium border min-w-[200px]"
                 onClick={() => setShowInitialDatePicker(!showInitialDatePicker)}
               >
-                <p className="text-gray-500">
+                <p className="text-gray-500 text-sm xl:text-base">
                   {initialDate
                     ? initialDate.toLocaleDateString()
                     : "Escolha uma data"}
@@ -263,12 +263,12 @@ export function Constructions() {
               className="flex flex-col gap-1 relative"
               ref={finalDatePickerRef}
             >
-              <p className="text-black font-semibold">Data de Finalização</p>
+              <p className="text-black font-semibold text-sm xl:text-base">Data de Finalização</p>
               <div
                 className="px-2 py-1 flex justify-between items-center text-center gap-1 flex-row font-medium border min-w-[200px]"
                 onClick={() => setShowFinalDatePicker(!showFinalDatePicker)}
               >
-                <p className="text-gray-500">
+                <p className="text-gray-500 text-sm xl:text-base">
                   {finalDate
                     ? finalDate.toLocaleDateString()
                     : "Escolha uma data"}
@@ -297,11 +297,11 @@ export function Constructions() {
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-black font-semibold">Status da Obra</p>
+              <p className="text-black font-semibold text-sm xl:text-base">Status da Obra</p>
               <select
                 value={constructionStatus}
                 onChange={(e) => setConstructionStatus(e.target.value)}
-                className="px-2 py-1 text-left font-medium border min-w-[200px] bg-white text-gray-600"
+                className="px-2 py-1 text-left font-medium border min-w-[200px] bg-white text-gray-600 text-sm xl:text-base"
               >
                 <option value="Selecione">Selecione</option>
                 <option value="Finalizado">Finalizado</option>
@@ -334,14 +334,17 @@ export function Constructions() {
             <SearchBar
               placeholder="Procure pelo Nome do Cliente"
               onSearchTermChange={handleSearchNameClient}
+              className="text-xs xl:text-sm"
             />
             <SearchBar
               placeholder="Procure pelo Nome da Obra"
               onSearchTermChange={handleSearchConstructionClient}
+              className="text-xs xl:text-sm"
             />
             <SearchBar
               placeholder="Procure pela Categoria"
               onSearchTermChange={handleSearchCategoryClient}
+              className="text-xs xl:text-sm"
             />
           </div>
           <div
@@ -359,7 +362,7 @@ export function Constructions() {
             <thead>
               <tr>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("cliente")}
                 >
                   CLIENTE
@@ -369,7 +372,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("obra")}
                 >
                   OBRA
@@ -379,7 +382,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("dataInicio")}
                 >
                   DATA INICIO
@@ -389,7 +392,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("dataFim")}
                 >
                   DATA FIM
@@ -399,7 +402,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("status")}
                 >
                   STATUS
@@ -409,7 +412,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("valorContrato")}
                 >
                   VALOR DO CONTRATO
@@ -419,7 +422,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("categoria")}
                 >
                   CATEGORIA
@@ -429,7 +432,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("area")}
                 >
                   ÁREA
@@ -439,7 +442,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
                   onClick={() => requestSort("etapaAtual")}
                 >
                   ETAPA ATUAL
@@ -455,17 +458,17 @@ export function Constructions() {
             <tbody>
               {sortedProjectsPaginated.map((projeto) => (
                 <tr key={projeto.id}>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     {projeto.cliente}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">{projeto.obra}</td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">{projeto.obra}</td>
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     {projeto.dataInicio.toLocaleDateString("pt-BR")}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     {projeto.dataFim.toLocaleDateString("pt-BR")}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 min-w-[150px] border-b text-xs xl:text-sm">
                     {projeto.status && projeto.status === "Em andamento" && (
                       <Pill status="Em andamento" title="Em andamento" />
                     )}
@@ -473,26 +476,26 @@ export function Constructions() {
                       <Pill status="Finalizado" title="Finalizado" />
                     )}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     R$:{" "}
                     {new Intl.NumberFormat("pt-BR", {
                       style: "decimal",
                       minimumFractionDigits: 2,
                     }).format(projeto.valorContrato)}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     {projeto.categoria}
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     {projeto.area} m²
                   </td>
-                  <td className="px-4 py-2 border-b text-sm">
+                  <td className="px-2 py-1 xl:px-4 xl:py-2 border-b text-xs xl:text-sm">
                     {projeto.etapaAtual}
                   </td>
-                  <td className="border-b text-sm">
+                  <td className="border-b text-xs xl:text-sm">
                     <FaEdit size={19} className="cursor-pointer" />
                   </td>
-                  <td className="border-b text-sm">
+                  <td className="border-b text-xs xl:text-sm">
                     <IoTrashBin
                       size={19}
                       className="cursor-pointer"

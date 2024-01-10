@@ -69,14 +69,14 @@ export function Sidebar() {
     setInsideLinkTerceirosExpanded(false);
   };
 
-  const SIDEBAR_CLASSES = `text-lg ${
+  const SIDEBAR_CLASSES = `${
     expanded
-      ? "visible transition-opacity duration-300 ease-in-out opacity-100"
+      ? "visible transition-opacity duration-300 ease-in-out opacity-100 text-sm xl:text-base"
       : "hidden"
   }`;
 
   const NAV_LINK_CLASS = `flex align-middle items-center gap-5 p-[10px] ${
-    expanded ? "justify-left m-5" : "justify-center mt-5 mb-5"
+    expanded ? "justify-left m-1 xl:m-5" : "justify-center mt-5 mb-5"
   }`;
 
   const SUB_TITLE_OPTION_CLASS = `${
@@ -104,12 +104,12 @@ export function Sidebar() {
   return (
     <aside
       className={`fixed top-0 z-10 h-full bg-[#1B365D] text-white ${
-        expanded ? "w-64" : "w-32"
+        expanded ? "w-52 xl:w-64" : "w-28 xl:w-32"
       } transition-all`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="flex flex-col items-center text-white gap-1">
+      <div className="flex flex-col items-center text-white gap-1 w-full">
         <img
           src={expanded ? logoSideBar : logoSideBar}
           width={expanded ? 110 : 110}
