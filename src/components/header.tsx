@@ -3,10 +3,10 @@ import bell from "@/assets/icons/bell.svg";
 
 export function Header() {
   return (
-    <header className="h-16 xl:h-20 flex flex-row justify-end p-8 text-white">
+    <header className="h-16 2xl:h-20 flex flex-row justify-end p-8 text-white">
       <div className="flex flex-row justify-center align-middle items-center gap-10">
         <div>
-          <p className="text-base xl:text-lg text-[#D6D2C4] font-bold leading-7">
+          <p className="text-base 2xl:text-lg text-[#D6D2C4] font-bold leading-7">
             Elienai Ivana Thayanne Naiara
           </p>
           <p className="text-right text-[#8FCAB9] text-sm">
@@ -22,7 +22,7 @@ export function Header() {
         </div>
 
         <div className="cursor-pointer hover:opacity-50">
-          <img src={avatarTemplate} alt="" className="w-11 xl:w-16" />
+          <img src={avatarTemplate} alt="" className="w-11 2xl:w-16" />
         </div>
       </div>
     </header>

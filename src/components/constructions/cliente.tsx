@@ -35,7 +35,7 @@ export function Cliente() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs xl:text-sm ">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
         <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
           <div className="flex flex-col w-3/5">
             Nome do Cliente
@@ -51,7 +51,7 @@ export function Cliente() {
               selected={birthDateClient}
               onChange={(date) => setBirthDateClient(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-full p-1 text-center text-xs xl:text-sm  border rounded"
+              className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
               locale="pt-BR"
               placeholderText="ex: 29/04/1992"
             />
@@ -114,7 +114,7 @@ export function Cliente() {
 
       {/* Segunda parte */}
 
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs xl:text-sm ">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Contatos</p>
           <div className="flex flex-row mr-5 gap-2">
@@ -161,7 +161,7 @@ export function Cliente() {
               selected={birthDateContact}
               onChange={(date) => setBirthDateContact(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-44 p-1 text-center text-xs xl:text-sm  border rounded"
+              className="w-44 p-1 text-center text-xs 2xl:text-sm  border rounded"
               locale="pt-BR"
               placeholderText="ex: 29/04/1992"
             />
@@ -195,7 +195,7 @@ export function Cliente() {
 
       {/* Terceira parte */}
 
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs xl:text-sm ">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Endereços</p>
           <div className="flex flex-row mr-5 gap-2">

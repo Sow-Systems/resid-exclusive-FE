@@ -171,7 +171,7 @@ export function Planejamento() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs xl:text-sm  h-full">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm  h-full">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Dados do Planejamento</p>
         </div>
@@ -243,7 +243,7 @@ export function Planejamento() {
               selected={startDate}
               onChange={(date) => setStartDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-xs xl:text-sm  border rounded"
+              className="w-32 p-1 text-center text-xs 2xl:text-sm  border rounded"
               locale="pt-BR"
               placeholderText="ex: 29/04/2022"
             />
@@ -254,7 +254,7 @@ export function Planejamento() {
               selected={endDate}
               onChange={(date) => setEndDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-xs xl:text-sm  border rounded"
+              className="w-32 p-1 text-center text-xs 2xl:text-sm  border rounded"
               minDate={startDate}
               locale="pt-BR"
               placeholderText="ex: 01/05/2023"
@@ -344,7 +344,7 @@ export function Planejamento() {
                   <tr
                     key={projeto.id}
                     onClick={() => toggleProjectSelection(projeto.id)}
-                    className={`cursor-pointer hover:bg-blue-100 text-xs xl:text-sm ${
+                    className={`cursor-pointer hover:bg-blue-100 text-xs 2xl:text-sm ${
                       selectedProjectIds.has(projeto.id) ? "bg-blue-200" : ""
                     }`}
                   >

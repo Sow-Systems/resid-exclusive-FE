@@ -10,7 +10,7 @@ export function DadosdaObra() {
 
   return (
     <>
-      <div className="flex flex-col bg-white m-1 rounded-sm text-xs xl:text-sm h-full">
+      <div className="flex flex-col bg-white m-1 rounded-sm text-xs 2xl:text-sm h-full">
         <div className="flex flex-row gap-2 p-4 justify-between">
           <div className="flex flex-col w-4/5">
             Nome da obra
@@ -88,7 +88,7 @@ export function DadosdaObra() {
               selected={startDate}
               onChange={(date) => setStartDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-xs xl:text-sm border rounded"
+              className="w-32 p-1 text-center text-xs 2xl:text-sm border rounded"
               locale="pt-BR"
               placeholderText="ex: 29/04/2022"
             />
@@ -99,7 +99,7 @@ export function DadosdaObra() {
               selected={endDate}
               onChange={(date) => setEndDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-xs xl:text-sm border rounded"
+              className="w-32 p-1 text-center text-xs 2xl:text-sm border rounded"
               minDate={startDate}
               locale="pt-BR"
               placeholderText="ex: 01/05/2023"
@@ -163,7 +163,7 @@ export function DadosdaObra() {
 
       {/* Segunda parte */}
 
-      <div className="flex flex-col bg-white m-1 rounded-sm text-xs xl:text-sm">
+      <div className="flex flex-col bg-white m-1 rounded-sm text-xs 2xl:text-sm">
         <div className="flex flex-row gap-2 p-4 justify-between">
           <div className="flex flex-col w-2/4">
             Endereço
