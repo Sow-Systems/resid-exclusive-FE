@@ -334,17 +334,17 @@ export function Constructions() {
             <SearchBar
               placeholder="Procure pelo Nome do Cliente"
               onSearchTermChange={handleSearchNameClient}
-              className="text-xs xl:text-sm"
+              className="text-xs xl:text-sm max-w-[240px] xl:max-w-[320px]"
             />
             <SearchBar
               placeholder="Procure pelo Nome da Obra"
               onSearchTermChange={handleSearchConstructionClient}
-              className="text-xs xl:text-sm"
+              className="text-xs xl:text-sm max-w-[240px] xl:max-w-[320px]"
             />
             <SearchBar
               placeholder="Procure pela Categoria"
               onSearchTermChange={handleSearchCategoryClient}
-              className="text-xs xl:text-sm"
+              className="text-xs xl:text-sm max-w-[240px] xl:max-w-[320px]"
             />
           </div>
           <div
@@ -362,7 +362,7 @@ export function Constructions() {
             <thead>
               <tr>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("cliente")}
                 >
                   CLIENTE
@@ -372,7 +372,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("obra")}
                 >
                   OBRA
@@ -382,7 +382,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("dataInicio")}
                 >
                   DATA INICIO
@@ -392,7 +392,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("dataFim")}
                 >
                   DATA FIM
@@ -402,7 +402,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("status")}
                 >
                   STATUS
@@ -412,17 +412,17 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("valorContrato")}
                 >
-                  VALOR DO CONTRATO
+                  CONTRATO $
                   <SortIcon
                     isSorted={sortConfig?.key === "valorContrato"}
                     isAsc={sortConfig?.direction === "asc"}
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("categoria")}
                 >
                   CATEGORIA
@@ -432,7 +432,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("area")}
                 >
                   ÁREA
@@ -442,7 +442,7 @@ export function Constructions() {
                   />
                 </th>
                 <th
-                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm"
+                  className="px-4 py-2 cursor-pointer text-xs xl:text-sm whitespace-nowrap"
                   onClick={() => requestSort("etapaAtual")}
                 >
                   ETAPA ATUAL

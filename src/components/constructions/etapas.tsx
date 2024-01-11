@@ -47,7 +47,7 @@ export function Etapas() {
 
   return (
     <>
-      <div className="flex flex-col bg-white m-1 rounded-sm h-full">
+      <div className="flex flex-col bg-white m-1 rounded-sm h-full text-sm xl:text-base">
         <div className="flex flex-row gap-2 p-4 justify-start">
           <div className="flex flex-col">
             <Button

@@ -171,7 +171,7 @@ export function Planejamento() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-sm h-full">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs xl:text-sm  h-full">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Dados do Planejamento</p>
         </div>
@@ -243,7 +243,7 @@ export function Planejamento() {
               selected={startDate}
               onChange={(date) => setStartDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-sm border rounded"
+              className="w-32 p-1 text-center text-xs xl:text-sm  border rounded"
               locale="pt-BR"
               placeholderText="ex: 29/04/2022"
             />
@@ -254,7 +254,7 @@ export function Planejamento() {
               selected={endDate}
               onChange={(date) => setEndDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-sm border rounded"
+              className="w-32 p-1 text-center text-xs xl:text-sm  border rounded"
               minDate={startDate}
               locale="pt-BR"
               placeholderText="ex: 01/05/2023"
@@ -262,7 +262,7 @@ export function Planejamento() {
           </div>
         </div>
         <div className="flex flex-row justify-end gap-2 mb-2 mr-3 ">
-          <Button className="p-1 rounded-md border-2 bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white flex flex-row justify-center gap-1">
+          <Button className="p-1 rounded-md border-2 bg-yellow-500 hover:bg-yellow-700 cursor-pointer text-white flex flex-row justify-center gap-1 items-center">
             <IoBackspaceOutline size={20} color={"white"} />
             Limpar
           </Button>
@@ -344,30 +344,28 @@ export function Planejamento() {
                   <tr
                     key={projeto.id}
                     onClick={() => toggleProjectSelection(projeto.id)}
-                    className={`cursor-pointer hover:bg-blue-100 ${
+                    className={`cursor-pointer hover:bg-blue-100 text-xs xl:text-sm ${
                       selectedProjectIds.has(projeto.id) ? "bg-blue-200" : ""
                     }`}
                   >
-                    <td className="px-4 py-2 border-b text-sm">
-                      {projeto.etapa}
-                    </td>
-                    <td className="px-4 py-2 border-b text-sm">
+                    <td className="px-4 py-2 border-b">{projeto.etapa}</td>
+                    <td className="px-4 py-2 border-b">
                       {projeto.tipoMaoDeObra}
                     </td>
-                    <td className="px-4 py-2 border-b text-sm">
+                    <td className="px-4 py-2 border-b">
                       {projeto.especialidade}
                     </td>
-                    <td className="px-4 py-2 border-b text-sm">
+                    <td className="px-4 py-2 border-b">
                       R$:
                       {new Intl.NumberFormat("pt-BR", {
                         style: "decimal",
                         minimumFractionDigits: 2,
                       }).format(projeto.valor)}
                     </td>
-                    <td className="px-4 py-2 border-b text-sm">
+                    <td className="px-4 py-2 border-b">
                       {projeto.dataInicio.toLocaleDateString("pt-BR")}
                     </td>
-                    <td className="px-4 py-2 border-b text-sm">
+                    <td className="px-4 py-2 border-b">
                       {projeto.dataFim.toLocaleDateString("pt-BR")}
                     </td>
                   </tr>

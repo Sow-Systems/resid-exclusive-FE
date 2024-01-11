@@ -29,7 +29,7 @@ export const ModalAddConstruction = ({
         onClose={() => setModalInfo(false)}
         title="CADASTRO DE OBRAS"
       />
-      <div className="flex flex-col bg-gray-200 overflow-y-auto w-[969px] h-[780px]">
+      <div className="flex flex-col bg-gray-200 overflow-y-auto w-[969px] h-[550px] xl:h-[780px]">
         <div className="bg-gray-300 w-full flex flex-row gap-3 p-2">
           <Button
             className={`text-sm ${
@@ -76,7 +76,6 @@ export const ModalAddConstruction = ({
         {activeTab === "Cliente" && <Cliente />}
         {activeTab === "Etapas" && <Etapas />}
         {activeTab === "Planejamento" && <Planejamento />}
-
       </div>
     </Modal>
   );

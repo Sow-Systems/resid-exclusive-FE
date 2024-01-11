@@ -105,7 +105,7 @@ export function Home() {
           </Card>
           <Card className="w-full h-32 xl:h-40">
             <div className="flex flex-row p-4  h-full">
-            <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around">
                 <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Contas à Receber Pendencias
                 </p>
@@ -121,7 +121,7 @@ export function Home() {
           </Card>
           <Card className="w-full h-32 xl:h-40">
             <div className="flex flex-row p-4 h-full">
-            <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around">
                 <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Folhas de Pagamento em Aberto
                 </p>
@@ -132,7 +132,7 @@ export function Home() {
           </Card>
           <Card className="w-full h-32 xl:h-40">
             <div className="flex flex-row p-4 h-full">
-            <div className="flex flex-col justify-around">
+              <div className="flex flex-col justify-around">
                 <p className="text-xs xl:text-sm font-medium mb-4 xl:mb-7 mr-4">
                   Folhas de Pagamento em Aberto
                 </p>
@@ -235,7 +235,7 @@ export function Home() {
                   {sortedDueAccountsFirstTable.map((conta) => (
                     <tr
                       key={conta.id}
-                      className="text-left text-[#191D23] font-normal text-xs xl:text-sm"
+                      className="text-left text-[#191D23] font-normal text-xs xl:text-sm whitespace-nowrap"
                     >
                       <td className="border-b border-t p-3">
                         {conta.description}
@@ -245,7 +245,7 @@ export function Home() {
                       </td>
                       <td className="border-b border-t p-3">{conta.dueDate}</td>
                       <td className="border-b border-t p-3">
-                        <Button className="bg-[#ECFDF5] text-[#FF0000] font-semibold pl-7 pr-7">
+                        <Button className="bg-[#ECFDF5] text-[#FF0000] font-semibold pl-7 pr-7 ">
                           {conta.status}
                         </Button>
                       </td>
@@ -284,7 +284,7 @@ export function Home() {
                       onClick={() => handleSortSecondTable("client")}
                     >
                       <div className="flex flex-row gap-2 items-center">
-                      CLIENTE
+                        CLIENTE
                         {sortBySecondTable === "client" ? (
                           sortAscSecondTable ? (
                             <BsChevronDown color="black" />
@@ -301,7 +301,7 @@ export function Home() {
                       onClick={() => handleSortSecondTable("construction")}
                     >
                       <div className="flex flex-row gap-2 items-center">
-                      OBRA
+                        OBRA
                         {sortBySecondTable === "construction" ? (
                           sortAscSecondTable ? (
                             <BsChevronDown color="black" />
@@ -318,7 +318,7 @@ export function Home() {
                       onClick={() => handleSortSecondTable("deliveryDate")}
                     >
                       <div className="flex flex-row gap-2 items-center">
-                      DATA DO RECEBIMENTO
+                        DATA DO RECEBIMENTO
                         {sortBySecondTable === "deliveryDate" ? (
                           sortAscSecondTable ? (
                             <BsChevronDown color="black" />
@@ -336,7 +336,7 @@ export function Home() {
                       onClick={() => handleSortSecondTable("value")}
                     >
                       <div className="flex flex-row gap-2 items-center">
-                      VALOR
+                        VALOR
                         {sortBySecondTable === "value" ? (
                           sortAscSecondTable ? (
                             <BsChevronDown color="black" />
@@ -355,7 +355,7 @@ export function Home() {
                   {sortedDueAccountsSecondTable.map((conta) => (
                     <tr
                       key={conta.id}
-                      className="text-left text-[#191D23] font-normal text-xs xl:text-sm"
+                      className="text-left text-[#191D23] font-normal text-xs xl:text-sm whitespace-nowrap"
                     >
                       <td className="border-b border-t p-3">{conta.client}</td>
                       <td className="border-b border-t p-3">
@@ -365,7 +365,7 @@ export function Home() {
                         {conta.deliveryDate}
                       </td>
                       <td className="border-b border-t p-3">
-                        <Button className="bg-[#ECFDF5] text-[#064E3B] font-semibold pl-7 pr-7">
+                        <Button className="bg-[#ECFDF5] text-[#064E3B] font-semibold pl-7 pr-7 ">
                           {conta.status}
                         </Button>
                       </td>
