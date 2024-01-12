@@ -12,11 +12,30 @@ import { useState } from "react";
 import { ModalDeleteRegister } from "../modalDeleteRegister";
 import { ModalSaveRegister } from "../modalSaveRegister";
 
+type ClientInfo = {
+  id: number;
+  selected?: boolean;
+  name: string;
+  birthDate?: Date;
+  type?: string;
+  cpf?: string;
+  cnpj?: string;
+  email?: string;
+  phone?: string;
+};
+
+type ClientState = {
+  birthDateClient: Date | null;
+  name: string;
+  type: string;
+  cpf: string;
+  cnpj: string;
+  email: string;
+  phone: string;
+  observations: string;
+};
+
 export function Cliente() {
-  const [birthDateContact, setBirthDateContact] = useState<Date | null>(null);
-
-  const [birthDateClient, setBirthDateClient] = useState<Date | null>(null);
-
   const [deleteModalInfo, setDeleteModalInfo] = useState(false);
 
   const handleModalRemoveRegister = () => {
@@ -33,6 +52,96 @@ export function Cliente() {
     setDeleteModalInfo(false);
   };
 
+  const [clients] = useState<ClientInfo[]>([
+    {
+      id: 1,
+      name: "Jorge",
+      birthDate: new Date("1985-05-05"),
+      type: "Pessoa Jurídica",
+      cpf: "123.135.456-08",
+      cnpj: "01.12.456/0001-01",
+      email: "jorge@email.com",
+      phone: "(16) 98956-5656",
+    },
+    {
+      id: 2,
+      name: "Luis",
+      birthDate: new Date("1989-05-05"),
+      type: "Pessoa Física",
+      cpf: "987.654.321-00",
+      email: "luis@email.com",
+      phone: "(16) 94561-7890",
+    },
+    {
+      id: 3,
+      name: "Augusto",
+      birthDate: new Date("1980-05-05"),
+      type: "Pessoa Física",
+      cpf: "456.789.123-55",
+      email: "augusto@email.com",
+      phone: "(16) 91234-5678",
+    },
+  ]);
+
+  const [birthDateContact, setBirthDateContact] = useState<Date | null>(null);
+
+  const initialClientState: ClientState = {
+    birthDateClient: null,
+    name: "",
+    type: "",
+    cpf: "",
+    cnpj: "",
+    email: "",
+    phone: "",
+    observations: "",
+  };
+
+  const [client, setClient] = useState<ClientState>(initialClientState);
+  const [isNewClient, setIsNewClient] = useState(false);
+  const [clientSelected, setClientSelected] = useState<string>("");
+
+  const handleNewClientChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const isChecked = event.target.checked;
+    setIsNewClient(isChecked);
+    if (isChecked) {
+      setClientSelected("");
+      setClient(initialClientState);
+    }
+  };
+
+  const handleClientSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedClientId = event.target.value;
+    setClientSelected(selectedClientId);
+    setIsNewClient(false);
+
+    const selectedClient = clients.find(
+      (c) => c.id.toString() === selectedClientId
+    );
+    if (selectedClient) {
+      setClient({
+        birthDateClient: new Date(selectedClient.birthDate!),
+        name: selectedClient.name,
+        type: selectedClient.type!,
+        cpf: selectedClient.cpf!,
+        cnpj: selectedClient.cnpj!,
+        email: selectedClient.email!,
+        phone: selectedClient.phone!,
+        observations: "",
+      });
+    }
+  };
+
+  const updateClientField = <K extends keyof ClientState>(
+    field: K,
+    value: ClientState[K]
+  ) => {
+    setClient((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <>
       <div className="flex flex-col h-full overflow-x-auto">
@@ -40,10 +149,40 @@ export function Cliente() {
 
         <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
           <div className="grid grid-cols-12 gap-2 px-4 py-2 2xl:p-4">
-            <div className="col-span-8 flex flex-col">
+            <div className="col-span-2 flex flex-col">
+              Cliente
+              <select
+                value={clientSelected}
+                onChange={handleClientSelectChange}
+                disabled={isNewClient}
+                className="p-[2px] text-left font-medium border bg-white text-gray-600"
+              >
+                <option value="" className="text-gray-500">
+                  Selecione
+                </option>
+                {clients.map((client) => (
+                  <option key={client.id} value={client.id.toString()}>
+                    {client.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-span-2 flex flex-row text-center justify-around align-middle items-center">
+              Novo Cliente
+              <input
+                type="checkbox"
+                checked={isNewClient}
+                onChange={handleNewClientChange}
+                className="border text-gray-700 rounded p-1"
+              />
+            </div>
+            <div className="col-span-4 flex flex-col">
               Nome do Cliente
               <input
                 type="text"
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.name}
+                onChange={(e) => updateClientField("name", e.target.value)}
                 className="border text-gray-700 rounded p-1"
                 placeholder="ex: Edificio Marina"
               />
@@ -51,18 +190,24 @@ export function Cliente() {
             <div className="col-span-2 flex flex-col">
               Data de Nascimento
               <DatePicker
-                selected={birthDateClient}
-                onChange={(date) => setBirthDateClient(date!)}
+                selected={client.birthDateClient}
+                onChange={(date: Date | null) =>
+                  updateClientField("birthDateClient", date)
+                }
                 dateFormat="dd/MM/yyyy"
-                className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
+                className="w-full p-1 text-center text-xs 2xl:text-sm border rounded"
                 locale="pt-BR"
                 placeholderText="ex: 29/04/1992"
+                disabled={!isNewClient && clientSelected !== ""}
               />
             </div>
             <div className="col-span-2 flex flex-col">
               Tipo
               <input
                 type="text"
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.type}
+                onChange={(e) => updateClientField("type", e.target.value)}
                 className="border text-gray-700 rounded p-1"
                 placeholder="Pessoa Jurídica"
               />
@@ -76,14 +221,20 @@ export function Cliente() {
                 type="text"
                 className="border text-gray-700 rounded p-1 w-full"
                 placeholder="123.135.456-08"
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.cpf}
+                onChange={(e) => updateClientField("cpf", e.target.value)}
               />
             </div>
-            <div className="col-span-3 flex flex-col">
+            <div className="col-span-2 flex flex-col">
               CNPJ
               <input
                 type="text"
                 className="border text-gray-700 rounded p-1 w-full"
                 placeholder="01.12.456/0001-01"
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.cnpj}
+                onChange={(e) => updateClientField("cnpj", e.target.value)}
               />
             </div>
             <div className="col-span-3 flex flex-col">
@@ -92,14 +243,20 @@ export function Cliente() {
                 type="text"
                 className="border text-gray-700 rounded p-1 w-full"
                 placeholder="ex: cliente@cliente.com.br"
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.email}
+                onChange={(e) => updateClientField("email", e.target.value)}
               />
             </div>
-            <div className="col-span-3 flex flex-col">
+            <div className="col-span-2 flex flex-col">
               Celular
               <input
                 type="text"
                 className="border text-gray-700 rounded p-1"
                 placeholder="(16) 98956-5656"
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.phone}
+                onChange={(e) => updateClientField("phone", e.target.value)}
               />
             </div>
           </div>
@@ -108,6 +265,11 @@ export function Cliente() {
             <div className="flex flex-col w-full">
               Observações
               <textarea
+                disabled={!isNewClient && clientSelected !== ""}
+                value={client.observations}
+                onChange={(e) =>
+                  updateClientField("observations", e.target.value)
+                }
                 className="border text-gray-700 rounded p-1"
                 rows={2}
                 placeholder="Complete com as observações..."

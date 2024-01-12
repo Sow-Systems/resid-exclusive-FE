@@ -398,7 +398,7 @@ export function Home() {
             </p>
             <div className="flex flex-col justify-start items-start w-full pl-3 overflow-y-auto">
               {birthdayDayUsers.map((user) => (
-                <div className="flex flex-row gap-4 mb-2 mt-2">
+                <div className="flex flex-row gap-4 mb-2 mt-2" key={user.id}>
                   <div>
                     <img
                       src={user.img}
@@ -424,7 +424,7 @@ export function Home() {
             </p>
             <div className="flex flex-col justify-start items-start w-full pl-3 overflow-y-auto">
               {birthdayMonthUsers.map((user) => (
-                <div className="flex flex-row gap-4 mb-2 mt-2">
+                <div className="flex flex-row gap-4 mb-2 mt-2" key={user.id}>
                   <div>
                     <img
                       src={user.img}

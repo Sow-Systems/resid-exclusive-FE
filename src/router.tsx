@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import { MainLayout } from "./components/mainLayout";
@@ -9,26 +9,91 @@ import { ThirdPartyPayCheck } from "./pages/thirdPartyPayCheck";
 import { Configuration } from "./pages/configuration";
 import { EmployeesNew } from "./pages/employeesNew";
 import { EmployeesTimeSheet } from "./pages/employeesTimeSheet";
+import { PrivateRoute } from "./utils/privateRoutes";
+import { useAuth } from "./contexts/AuthContext";
+
+const AuthenticatedRoutes = () => (
+  <MainLayout>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/constructions"
+        element={
+          <PrivateRoute>
+            <Constructions />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/finance"
+        element={
+          <PrivateRoute>
+            <Finance />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/employees_new"
+        element={
+          <PrivateRoute>
+            <EmployeesNew />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/employees_timesheet"
+        element={
+          <PrivateRoute>
+            <EmployeesTimeSheet />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/thirdParty_new"
+        element={
+          <PrivateRoute>
+            <ThirdPartyNew />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/thirdParty_paycheck"
+        element={
+          <PrivateRoute>
+            <ThirdPartyPayCheck />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/configuration"
+        element={
+          <PrivateRoute>
+            <Configuration />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+  </MainLayout>
+);
 
 export function AppRoutes() {
-  const isAuthenticated = true;
+  const { token } = useAuth();
 
-  return isAuthenticated ? (
-    <MainLayout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/constructions" element={<Constructions />} />
-        <Route path="/finance" element={<Finance />} />
-        <Route path="/employees_new" element={<EmployeesNew />} />
-        <Route path="/employees_timesheet" element={<EmployeesTimeSheet />} />
-        <Route path="/thirdParty_new" element={<ThirdPartyNew />} />
-        <Route path="/thirdParty_paycheck" element={<ThirdPartyPayCheck />} />
-        <Route path="/configuration" element={<Configuration />} />
-      </Routes>
-    </MainLayout>
-  ) : (
+  return (
     <Routes>
-      <Route path="/*" element={<Login />} />
+      {token ? (
+        <Route path="/*" element={<AuthenticatedRoutes />} />
+      ) : (
+        <Route path="/" element={<Login />} />
+      )}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
