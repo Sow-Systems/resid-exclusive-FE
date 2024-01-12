@@ -334,12 +334,12 @@ export function Constructions() {
             <SearchBar
               placeholder="Procure pelo Nome do Cliente"
               onSearchTermChange={handleSearchNameClient}
-              className="text-xs 2xl:text-sm max-w-[280px] 2xl:max-w-[320px]"
+              className="text-xs 2xl:text-sm min-w-[280px] 2xl:max-w-[320px]"
             />
             <SearchBar
               placeholder="Procure pelo Nome da Obra"
               onSearchTermChange={handleSearchConstructionClient}
-              className="text-xs 2xl:text-sm max-w-[280px] 2xl:max-w-[320px]"
+              className="text-xs 2xl:text-sm min-w-[280px] 2xl:max-w-[320px]"
             />
             <SearchBar
               placeholder="Procure pela Categoria"

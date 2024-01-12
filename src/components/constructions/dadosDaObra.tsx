@@ -10,7 +10,7 @@ export function DadosdaObra() {
 
   return (
     <>
-      <div className="flex flex-col bg-white m-1 rounded-sm text-[10px] 2xl:text-sm h-full">
+      <div className="flex flex-col bg-white m-1 rounded-sm text-xs 2xl:text-sm h-full">
         <div className="flex flex-row gap-2 p-4 justify-between">
           <div className="flex flex-col w-4/5">
             Nome da obra
