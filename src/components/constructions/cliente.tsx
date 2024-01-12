@@ -39,8 +39,8 @@ export function Cliente() {
         {/* Primeira parte */}
 
         <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
-          <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
-            <div className="flex flex-col w-3/5">
+          <div className="grid grid-cols-12 gap-2 px-4 py-2 2xl:p-4">
+            <div className="col-span-8 flex flex-col">
               Nome do Cliente
               <input
                 type="text"
@@ -48,7 +48,7 @@ export function Cliente() {
                 placeholder="ex: Edificio Marina"
               />
             </div>
-            <div className="flex flex-col w-1/5 justify-center items-center">
+            <div className="col-span-2 flex flex-col">
               Data de Nascimento
               <DatePicker
                 selected={birthDateClient}
@@ -59,7 +59,7 @@ export function Cliente() {
                 placeholderText="ex: 29/04/1992"
               />
             </div>
-            <div className="flex flex-col w-1/5">
+            <div className="col-span-2 flex flex-col">
               Tipo
               <input
                 type="text"
@@ -68,32 +68,33 @@ export function Cliente() {
               />
             </div>
           </div>
-          <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
-            <div className="flex flex-col w-1/3">
+
+          <div className="grid grid-cols-12 gap-2 px-4 py-2 2xl:p-4">
+            <div className="col-span-3 flex flex-col">
               CPF
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-52"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="123.135.456-08"
               />
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="col-span-3 flex flex-col">
               CNPJ
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-52"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="01.12.456/0001-01"
               />
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="col-span-3 flex flex-col">
               E-mail
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-52"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="ex: cliente@cliente.com.br"
               />
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="col-span-3 flex flex-col">
               Celular
               <input
                 type="text"
@@ -141,47 +142,48 @@ export function Cliente() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row gap-2 p-4 justify-between">
-            <div className="flex flex-col">
+
+          <div className="grid grid-cols-12 gap-2 px-4 py-2 2xl:p-4">
+            <div className="col-span-2 flex flex-col">
               Descrição
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-32"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="Recados"
               />
             </div>
-            <div className="flex flex-col ">
+            <div className="col-span-3 flex flex-col">
               Nome
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-52"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="Gilberto Barros"
               />
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div className="col-span-2 flex flex-col">
               Data de Nascimento
               <DatePicker
                 selected={birthDateContact}
                 onChange={(date) => setBirthDateContact(date!)}
                 dateFormat="dd/MM/yyyy"
-                className="w-44 p-1 text-center text-xs 2xl:text-sm  border rounded"
+                className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
                 locale="pt-BR"
                 placeholderText="ex: 29/04/1992"
               />
             </div>
-            <div className="flex flex-col ">
+            <div className="col-span-2 flex flex-col">
               Telefone
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-36"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="(16) 98956-5656"
               />
             </div>
-            <div className="flex flex-col ">
+            <div className="col-span-3 flex flex-col">
               E-mail
               <input
                 type="text"
-                className="border text-gray-700 rounded p-1 w-52"
+                className="border text-gray-700 rounded p-1 w-full"
                 placeholder="ex: cliente@cliente.com.br"
               />
             </div>

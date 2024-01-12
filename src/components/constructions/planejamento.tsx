@@ -175,8 +175,8 @@ export function Planejamento() {
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Dados do Planejamento</p>
         </div>
-        <div className="flex flex-row gap-2 p-4 justify-between">
-          <div className="flex flex-col">
+        <div className="grid grid-cols-12 gap-2 px-4 py-2 2xl:p-4">
+        <div className="col-span-2 flex flex-col">
             Etapa
             <select
               value={etapaSelected}
@@ -193,12 +193,12 @@ export function Planejamento() {
               ))}
             </select>
           </div>
-          <div className="flex flex-col ">
+          <div className="col-span-2 flex flex-col">
             Tipo da Mão de Obra
             <select
               value={typeWorkingClass}
               onChange={handleTypeWorkingClassChange}
-              className="px-2 py-1 text-left font-medium border bg-white text-gray-600 w-40"
+              className="px-2 py-1 text-left font-medium border bg-white text-gray-600 w-full"
             >
               <option value="" disabled hidden className="text-gray-500">
                 Selecione
@@ -211,13 +211,13 @@ export function Planejamento() {
             </select>
           </div>
 
-          <div className="flex flex-col ">
+          <div className="col-span-2 flex flex-col">
             Especialidade
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
               disabled={typeWorkingClass !== "2"}
-              className="px-2 py-1 text-left font-medium border bg-white text-gray-600 w-44"
+              className="px-2 py-1 text-left font-medium border bg-white text-gray-600 w-full"
             >
               <option value="" disabled hidden className="text-gray-500">
                 Selecione
@@ -229,32 +229,32 @@ export function Planejamento() {
               ))}
             </select>
           </div>
-          <div className="flex flex-col ">
+          <div className="col-span-2 flex flex-col">
             Valor
             <input
               type="text"
-              className="border text-gray-700 rounded p-1 w-32"
+              className="border text-gray-700 rounded p-1 w-full"
               placeholder="R$: 3.500.000,00"
             />
           </div>
-          <div className="flex flex-col justify-center items-center">
+          <div className="col-span-2 flex flex-col">
             Data de Início
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-xs 2xl:text-sm  border rounded"
+              className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
               locale="pt-BR"
               placeholderText="ex: 29/04/2022"
             />
           </div>
-          <div className="flex flex-col justify-center items-center">
-            Data Fim
+          <div className="col-span-2 flex flex-col">
+            Data de Finalização
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date!)}
               dateFormat="dd/MM/yyyy"
-              className="w-32 p-1 text-center text-xs 2xl:text-sm  border rounded"
+              className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
               minDate={startDate}
               locale="pt-BR"
               placeholderText="ex: 01/05/2023"
