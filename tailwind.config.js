@@ -25,6 +25,9 @@ export const theme = {
         'thrifty': ['Thrifty', 'sans-serif'], // Font for the specific page
       }
     },
+    screens: {
+      '2xl-height': {'raw': '(min-height: 780px)'},
+    },
   },
 };
 export const plugins = [];

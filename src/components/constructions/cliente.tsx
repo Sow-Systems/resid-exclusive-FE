@@ -35,258 +35,262 @@ export function Cliente() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
-        <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
-          <div className="flex flex-col w-3/5">
-            Nome do Cliente
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="ex: Edificio Marina"
-            />
-          </div>
-          <div className="flex flex-col w-1/5 justify-center items-center">
-            Data de Nascimento
-            <DatePicker
-              selected={birthDateClient}
-              onChange={(date) => setBirthDateClient(date!)}
-              dateFormat="dd/MM/yyyy"
-              className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
-              locale="pt-BR"
-              placeholderText="ex: 29/04/1992"
-            />
-          </div>
-          <div className="flex flex-col w-1/5">
-            Tipo
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="Pessoa Jurídica"
-            />
-          </div>
-        </div>
-        <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
-          <div className="flex flex-col w-1/3">
-            CPF
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-52"
-              placeholder="123.135.456-08"
-            />
-          </div>
-          <div className="flex flex-col w-1/3">
-            CNPJ
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-52"
-              placeholder="01.12.456/0001-01"
-            />
-          </div>
-          <div className="flex flex-col w-1/3">
-            E-mail
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-52"
-              placeholder="ex: cliente@cliente.com.br"
-            />
-          </div>
-          <div className="flex flex-col w-1/3">
-            Celular
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="(16) 98956-5656"
-            />
-          </div>
-        </div>
+      <div className="flex flex-col h-full overflow-x-auto">
+        {/* Primeira parte */}
 
-        <div className="flex flex-row gap-2 p-4 justify-between">
-          <div className="flex flex-col w-full">
-            Observações
-            <textarea
-              className="border text-gray-700 rounded p-1"
-              rows={2}
-              placeholder="Complete com as observações..."
-            ></textarea>
-          </div>
-        </div>
-      </div>
-
-      {/* Segunda parte */}
-
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
-        <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
-          <p className="font-semibold">Contatos</p>
-          <div className="flex flex-row mr-5 gap-2">
-            <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
-              <GoPencil size={20} color={"white"} />
-            </div>
-            <div
-              className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer"
-              onClick={handleModalRemoveRegister}
-            >
-              <FaRegTrashAlt size={20} color={"white"} />
-            </div>
-            <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
-              <FiPlus size={20} color={"white"} />
-            </div>
-            <div
-              className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer"
-              onClick={handleModalSaveRegister}
-            >
-              <CiFloppyDisk size={20} color={"white"} />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-row gap-2 p-4 justify-between">
-          <div className="flex flex-col">
-            Descrição
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-32"
-              placeholder="Recados"
-            />
-          </div>
-          <div className="flex flex-col ">
-            Nome
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-52"
-              placeholder="Gilberto Barros"
-            />
-          </div>
-          <div className="flex flex-col justify-center items-center">
-            Data de Nascimento
-            <DatePicker
-              selected={birthDateContact}
-              onChange={(date) => setBirthDateContact(date!)}
-              dateFormat="dd/MM/yyyy"
-              className="w-44 p-1 text-center text-xs 2xl:text-sm  border rounded"
-              locale="pt-BR"
-              placeholderText="ex: 29/04/1992"
-            />
-          </div>
-          <div className="flex flex-col ">
-            Telefone
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-36"
-              placeholder="(16) 98956-5656"
-            />
-          </div>
-          <div className="flex flex-col ">
-            E-mail
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-52"
-              placeholder="ex: cliente@cliente.com.br"
-            />
-          </div>
-        </div>
-        <div className="flex flex-row justify-end gap-2 mb-2 mr-3 ">
-          <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-            <MdOutlineArrowBackIos size={20} color={"gray"} />
-          </div>
-          <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-            <MdOutlineArrowForwardIos size={20} color={"gray"} />
-          </div>
-        </div>
-      </div>
-
-      {/* Terceira parte */}
-
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
-        <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
-          <p className="font-semibold">Endereços</p>
-          <div className="flex flex-row mr-5 gap-2">
-            <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
-              <GoPencil size={20} color={"white"} />
-            </div>
-            <div className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer">
-              <FaRegTrashAlt
-                size={20}
-                color={"white"}
-                onClick={handleModalRemoveRegister}
+        <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
+          <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
+            <div className="flex flex-col w-3/5">
+              Nome do Cliente
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="ex: Edificio Marina"
               />
             </div>
-            <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
-              <FiPlus size={20} color={"white"} />
+            <div className="flex flex-col w-1/5 justify-center items-center">
+              Data de Nascimento
+              <DatePicker
+                selected={birthDateClient}
+                onChange={(date) => setBirthDateClient(date!)}
+                dateFormat="dd/MM/yyyy"
+                className="w-full p-1 text-center text-xs 2xl:text-sm  border rounded"
+                locale="pt-BR"
+                placeholderText="ex: 29/04/1992"
+              />
             </div>
-            <div
-              className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer"
-              onClick={handleModalSaveRegister}
-            >
-              <CiFloppyDisk size={20} color={"white"} />
+            <div className="flex flex-col w-1/5">
+              Tipo
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="Pessoa Jurídica"
+              />
             </div>
           </div>
-        </div>
-        <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
-          <div className="flex flex-col">
-            Descrição
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="Cobranças"
-            />
+          <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
+            <div className="flex flex-col w-1/3">
+              CPF
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-52"
+                placeholder="123.135.456-08"
+              />
+            </div>
+            <div className="flex flex-col w-1/3">
+              CNPJ
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-52"
+                placeholder="01.12.456/0001-01"
+              />
+            </div>
+            <div className="flex flex-col w-1/3">
+              E-mail
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-52"
+                placeholder="ex: cliente@cliente.com.br"
+              />
+            </div>
+            <div className="flex flex-col w-1/3">
+              Celular
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="(16) 98956-5656"
+              />
+            </div>
           </div>
-          <div className="flex flex-col w-full">
-            Nome
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="Logradouro"
-            />
-          </div>
-          <div className="flex flex-col w-16">
-            Nº
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="123"
-            />
-          </div>
-          <div className="flex flex-col">
-            Complemento
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1 w-52"
-              placeholder="Ao lado do Prédio X"
-            />
+
+          <div className="flex flex-row gap-2 p-4 justify-between">
+            <div className="flex flex-col w-full">
+              Observações
+              <textarea
+                className="border text-gray-700 rounded p-1"
+                rows={2}
+                placeholder="Complete com as observações..."
+              ></textarea>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-row gap-2 p-4 justify-between">
-          <div className="flex flex-col w-full">
-            Bairro
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="Bairro Alamada"
-            />
+        {/* Segunda parte */}
+
+        <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
+          <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
+            <p className="font-semibold">Contatos</p>
+            <div className="flex flex-row mr-5 gap-2">
+              <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
+                <GoPencil size={20} color={"white"} />
+              </div>
+              <div
+                className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer"
+                onClick={handleModalRemoveRegister}
+              >
+                <FaRegTrashAlt size={20} color={"white"} />
+              </div>
+              <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
+                <FiPlus size={20} color={"white"} />
+              </div>
+              <div
+                className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer"
+                onClick={handleModalSaveRegister}
+              >
+                <CiFloppyDisk size={20} color={"white"} />
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col ">
-            CEP
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="14.095-050"
-            />
+          <div className="flex flex-row gap-2 p-4 justify-between">
+            <div className="flex flex-col">
+              Descrição
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-32"
+                placeholder="Recados"
+              />
+            </div>
+            <div className="flex flex-col ">
+              Nome
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-52"
+                placeholder="Gilberto Barros"
+              />
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              Data de Nascimento
+              <DatePicker
+                selected={birthDateContact}
+                onChange={(date) => setBirthDateContact(date!)}
+                dateFormat="dd/MM/yyyy"
+                className="w-44 p-1 text-center text-xs 2xl:text-sm  border rounded"
+                locale="pt-BR"
+                placeholderText="ex: 29/04/1992"
+              />
+            </div>
+            <div className="flex flex-col ">
+              Telefone
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-36"
+                placeholder="(16) 98956-5656"
+              />
+            </div>
+            <div className="flex flex-col ">
+              E-mail
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-52"
+                placeholder="ex: cliente@cliente.com.br"
+              />
+            </div>
           </div>
-          <div className="flex flex-col">
-            Cidade
-            <input
-              type="text"
-              className="border text-gray-700 rounded p-1"
-              placeholder="Tóquio"
-            />
+          <div className="flex flex-row justify-end gap-2 mb-2 mr-3 ">
+            <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
+              <MdOutlineArrowBackIos size={20} color={"gray"} />
+            </div>
+            <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
+              <MdOutlineArrowForwardIos size={20} color={"gray"} />
+            </div>
           </div>
         </div>
-        <div className="flex flex-row justify-end gap-2 mb-2 mr-3 rounded-sm">
-          <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-            <MdOutlineArrowBackIos size={20} color={"gray"} />
+
+        {/* Terceira parte */}
+
+        <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm ">
+          <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
+            <p className="font-semibold">Endereços</p>
+            <div className="flex flex-row mr-5 gap-2">
+              <div className="p-2 rounded-lg  bg-gray-500 hover:bg-gray-700 cursor-pointer">
+                <GoPencil size={20} color={"white"} />
+              </div>
+              <div className="p-2 rounded-lg  bg-red-500 hover:bg-red-700 cursor-pointer">
+                <FaRegTrashAlt
+                  size={20}
+                  color={"white"}
+                  onClick={handleModalRemoveRegister}
+                />
+              </div>
+              <div className="p-2 rounded-lg  bg-green-800 hover:bg-green-700 cursor-pointer">
+                <FiPlus size={20} color={"white"} />
+              </div>
+              <div
+                className="p-2 rounded-lg  bg-blue-700 hover:bg-blue-900 cursor-pointer"
+                onClick={handleModalSaveRegister}
+              >
+                <CiFloppyDisk size={20} color={"white"} />
+              </div>
+            </div>
           </div>
-          <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-            <MdOutlineArrowForwardIos size={20} color={"gray"} />
+          <div className="flex flex-row gap-2 pt-4 pl-4 pr-4 justify-between">
+            <div className="flex flex-col">
+              Descrição
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="Cobranças"
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              Nome
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="Logradouro"
+              />
+            </div>
+            <div className="flex flex-col w-16">
+              Nº
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="123"
+              />
+            </div>
+            <div className="flex flex-col">
+              Complemento
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1 w-52"
+                placeholder="Ao lado do Prédio X"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-row gap-2 p-4 justify-between">
+            <div className="flex flex-col w-full">
+              Bairro
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="Bairro Alamada"
+              />
+            </div>
+            <div className="flex flex-col ">
+              CEP
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="14.095-050"
+              />
+            </div>
+            <div className="flex flex-col">
+              Cidade
+              <input
+                type="text"
+                className="border text-gray-700 rounded p-1"
+                placeholder="Tóquio"
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-end gap-2 mb-2 mr-3 rounded-sm">
+            <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
+              <MdOutlineArrowBackIos size={20} color={"gray"} />
+            </div>
+            <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
+              <MdOutlineArrowForwardIos size={20} color={"gray"} />
+            </div>
           </div>
         </div>
       </div>

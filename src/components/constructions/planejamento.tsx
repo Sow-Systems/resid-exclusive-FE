@@ -171,7 +171,7 @@ export function Planejamento() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm  h-full">
+      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm overflow-x-auto">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Dados do Planejamento</p>
         </div>
@@ -386,7 +386,7 @@ export function Planejamento() {
               </Button>
             </div>
           </div>
-          <div className="flex flex-row gap-2 items-center justify-end mt-4">
+          <div className="flex flex-row gap-2 items-center justify-end mt-4 ">
             <select
               className="border p-1 rounded text-sm bg-white"
               value={itemsPerPage}
@@ -407,7 +407,7 @@ export function Planejamento() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm">
+      <div className="flex flex-col bg-white m-1 rounded-sm">
         <div className="flex flex-row gap-2 p-1 justify-end">
           <Button className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3">
             <CiFloppyDisk size={20} />
