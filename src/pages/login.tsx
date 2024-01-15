@@ -30,7 +30,6 @@ export function Login() {
 				username: formData.username,
 				password: formData.password,
 			});
-			toast.success("Seja bem-vindo!");
 			setToken(response.data.token);
 			navigate("/");
 		} catch (error: any) {
