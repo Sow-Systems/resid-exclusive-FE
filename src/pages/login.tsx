@@ -25,21 +25,18 @@ export function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (formData: UserForm) => {
-    console.log("começou")
     try {
-      console.log("já foi pro servidor")
       const response = await api.post("login", {
         username: formData.username,
         password: formData.password,
       });
-      console.log("já foi pro servidor")
       setToken(response.data.token);
       navigate("/");
     } catch (error: any) {
       console.log(error);
       if (error.message == "Network Error") toast.error(`Servidor inacessível`);
       else {
-        toast.error(`${error.response.data}`);
+        toast.error(`${error.response.data.message}`);
       }
     }
   };

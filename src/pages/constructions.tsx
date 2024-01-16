@@ -9,13 +9,16 @@ import excelIcon from "@/assets/icons/excel.svg";
 import pdfIcon from "@/assets/icons/pdf.svg";
 import addIcon from "@/assets/icons/add.svg";
 import { Button } from "@/components/button";
-import { dadosMockados } from "@/utils/mock/table";
 import { FaEdit } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { Pagination } from "@/components/pagination";
 import { ModalAddConstruction } from "@/components/modalAddConstruction";
 import { ModalDeleteRegister } from "@/components/modalDeleteRegister";
 import { Pill } from "@/utils/pill";
+import { api } from "@/utils/api";
+import { toast } from "react-toastify";
+import { ThreeDots } from "react-loader-spinner";
+import { ModalEditConstruction } from "@/components/modalEditConstruction";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -24,6 +27,18 @@ type ProjectData = {
   [key: string | number]: any;
 };
 
+type ProjectProps = {
+  prj_id: string;
+  cus_name: string;
+  prj_name: string;
+  prj_start_date: Date;
+  prj_end_date: Date;
+  prj_status: string;
+  prj_contract_value: number;
+  prj_category: string;
+  prj_area: number;
+  stg_name: string;
+};
 
 export function Constructions() {
   const [initialDate, setInitialDate] = useState<Date | null>(null);
@@ -31,13 +46,13 @@ export function Constructions() {
   const [showInitialDatePicker, setShowInitialDatePicker] = useState(false);
   const [showFinalDatePicker, setShowFinalDatePicker] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
-  const [projects, setProjects] = useState(dadosMockados);
+  const [projects, setProjects] = useState<ProjectProps[]>([]);
 
   const [constructionStatus, setConstructionStatus] = useState("Selecione");
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(dadosMockados.length);
+  const [totalItems, setTotalItems] = useState(projects.length);
 
   const [clientName, setClientName] = useState("");
   const [constructionName, setConstructionName] = useState("");
@@ -45,11 +60,19 @@ export function Constructions() {
 
   const [modalInfo, setModalInfo] = useState(false);
 
-  const [deleteModalInfo, setDeleteModalInfo] = useState(false);
-
   const handleModalAddConstruction = () => {
     setModalInfo(true);
   };
+
+  const [modalEdit, setModalEdit] = useState(false)
+  const [projectSelected, setProjectSelected] = useState([])
+
+  const handleModalEditConstruction = (project: any) => {
+    setModalEdit(true);
+    setProjectSelected(project)
+  };
+
+  const [deleteModalInfo, setDeleteModalInfo] = useState(false);
 
   const handleSearchNameClient = (term: string) => {
     setClientName(term);
@@ -99,24 +122,37 @@ export function Constructions() {
 
   const filteredProjects = useMemo(() => {
     return projects.filter((projeto) => {
-      const dataInicioProjeto = new Date(projeto.dataInicio);
-      const dataFimProjeto = new Date(projeto.dataFim);
+      const dataInicioProjeto = new Date(projeto.prj_start_date);
+      const dataFimProjeto = new Date(projeto.prj_end_date);
+
+      const matchesClientName = clientName
+        ? projeto.cus_name?.toLowerCase().includes(clientName.toLowerCase())
+        : true;
+      const matchesConstructionName = constructionName
+        ? projeto.prj_name
+            .toLowerCase()
+            .includes(constructionName.toLowerCase())
+        : true;
+      const matchesCategoryName = categoryName
+        ? projeto.prj_category
+            .toLowerCase()
+            .includes(categoryName.toLowerCase())
+        : true;
+      const matchesConstructionStatus =
+        constructionStatus !== "Selecione"
+          ? projeto.prj_status === constructionStatus
+          : true;
+      const matchesInitialDate =
+        !initialDate || dataInicioProjeto >= initialDate;
+      const matchesFinalDate = !finalDate || dataFimProjeto <= finalDate;
 
       return (
-        (clientName
-          ? projeto.cliente.toLowerCase().includes(clientName.toLowerCase())
-          : true) &&
-        (constructionName
-          ? projeto.obra.toLowerCase().includes(constructionName.toLowerCase())
-          : true) &&
-        (categoryName
-          ? projeto.categoria.toLowerCase().includes(categoryName.toLowerCase())
-          : true) &&
-        (constructionStatus !== "Selecione"
-          ? projeto.status === constructionStatus
-          : true) &&
-        (!initialDate || dataInicioProjeto >= initialDate) &&
-        (!finalDate || dataFimProjeto <= finalDate)
+        matchesClientName &&
+        matchesConstructionName &&
+        matchesCategoryName &&
+        matchesConstructionStatus &&
+        matchesInitialDate &&
+        matchesFinalDate
       );
     });
   }, [
@@ -134,15 +170,15 @@ export function Constructions() {
     if (
       sortConfig &&
       [
-        "cliente",
-        "obra",
-        "dataInicio",
-        "dataFim",
-        "status",
-        "valorContrato",
-        "categoria",
-        "area",
-        "etapaAtual",
+        "cus_name",
+        "prj_name",
+        "prj_start_date",
+        "prj_end_date",
+        "prj_status",
+        "prj_contract_value",
+        "prj_category",
+        "prj_area",
+        "stg_name",
       ].includes(sortConfig.key)
     ) {
       sortedItems.sort((a, b) => {
@@ -192,11 +228,28 @@ export function Constructions() {
   };
 
   const handleDeleteItem = () => {
-    const updatedProjects = projects.filter(projeto => projeto.id !== selectedItemId);
+    const updatedProjects = projects.filter(
+      (projeto) => projeto.id !== selectedItemId
+    );
     setProjects(updatedProjects);
     setDeleteModalInfo(false);
   };
 
+  const [loading, setLoading] = useState(true);
+
+  const fetchProjectsData = async () => {
+    try {
+      const response = await api.get("projects-info");
+      setProjects(response.data);
+      setLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      if (error.message == "Network Error") toast.error(`Servidor inacessível`);
+      else {
+        toast.error(`${error.response.data.message}`);
+      }
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -211,8 +264,12 @@ export function Constructions() {
   }, [filteredProjects]);
 
   useEffect(() => {
-    setTotalItems(dadosMockados.length);
-  }, [dadosMockados]);
+    setTotalItems(projects.length);
+  }, [projects]);
+
+  useEffect(() => {
+    fetchProjectsData();
+  }, []);
 
   return (
     <div className="flex flex-col h-full items-center p-3 gap-2">
@@ -227,7 +284,9 @@ export function Constructions() {
               className="flex flex-col gap-1 relative"
               ref={initialDatePickerRef}
             >
-              <p className="text-black font-semibold text-sm 2xl:text-base">Data de Início</p>
+              <p className="text-black font-semibold text-sm 2xl:text-base">
+                Data de Início
+              </p>
               <div
                 className="px-2 py-1 flex justify-between items-center text-center gap-1 flex-row font-medium border min-w-[200px]"
                 onClick={() => setShowInitialDatePicker(!showInitialDatePicker)}
@@ -263,7 +322,9 @@ export function Constructions() {
               className="flex flex-col gap-1 relative"
               ref={finalDatePickerRef}
             >
-              <p className="text-black font-semibold text-sm 2xl:text-base">Data de Finalização</p>
+              <p className="text-black font-semibold text-sm 2xl:text-base">
+                Data de Finalização
+              </p>
               <div
                 className="px-2 py-1 flex justify-between items-center text-center gap-1 flex-row font-medium border min-w-[200px]"
                 onClick={() => setShowFinalDatePicker(!showFinalDatePicker)}
@@ -297,7 +358,9 @@ export function Constructions() {
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-black font-semibold text-sm 2xl:text-base">Status da Obra</p>
+              <p className="text-black font-semibold text-sm 2xl:text-base">
+                Status da Obra
+              </p>
               <select
                 value={constructionStatus}
                 onChange={(e) => setConstructionStatus(e.target.value)}
@@ -357,156 +420,178 @@ export function Constructions() {
         </div>
       </div>
       <div className="bg-[#FFFFFF] flex flex-col h-full w-full justify-between p-3 pb-6 gap-4 rounded">
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto text-left">
-            <thead>
-              <tr>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("cliente")}
-                >
-                  CLIENTE
-                  <SortIcon
-                    isSorted={sortConfig?.key === "cliente"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("obra")}
-                >
-                  OBRA
-                  <SortIcon
-                    isSorted={sortConfig?.key === "obra"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("dataInicio")}
-                >
-                  DATA INICIO
-                  <SortIcon
-                    isSorted={sortConfig?.key === "dataInicio"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("dataFim")}
-                >
-                  DATA FIM
-                  <SortIcon
-                    isSorted={sortConfig?.key === "dataFim"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("status")}
-                >
-                  STATUS
-                  <SortIcon
-                    isSorted={sortConfig?.key === "status"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("valorContrato")}
-                >
-                  CONTRATO $
-                  <SortIcon
-                    isSorted={sortConfig?.key === "valorContrato"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("categoria")}
-                >
-                  CATEGORIA
-                  <SortIcon
-                    isSorted={sortConfig?.key === "categoria"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("area")}
-                >
-                  ÁREA
-                  <SortIcon
-                    isSorted={sortConfig?.key === "area"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
-                  onClick={() => requestSort("etapaAtual")}
-                >
-                  ETAPA ATUAL
-                  <SortIcon
-                    isSorted={sortConfig?.key === "etapaAtual"}
-                    isAsc={sortConfig?.direction === "asc"}
-                  />
-                </th>
-                <th className="px-4 py-2"></th>
-                <th className="px-4 py-2"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedProjectsPaginated.map((projeto) => (
-                <tr key={projeto.id}>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    {projeto.cliente}
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">{projeto.obra}</td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    {projeto.dataInicio.toLocaleDateString("pt-BR")}
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    {projeto.dataFim.toLocaleDateString("pt-BR")}
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 min-w-[150px] border-b text-xs 2xl:text-sm">
-                    {projeto.status && projeto.status === "Em andamento" && (
-                      <Pill status="Em andamento" title="Em andamento" />
-                    )}
-                    {projeto.status && projeto.status === "Finalizado" && (
-                      <Pill status="Finalizado" title="Finalizado" />
-                    )}
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    R$:{" "}
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "decimal",
-                      minimumFractionDigits: 2,
-                    }).format(projeto.valorContrato)}
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    {projeto.categoria}
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    {projeto.area} m²
-                  </td>
-                  <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                    {projeto.etapaAtual}
-                  </td>
-                  <td className="border-b text-xs 2xl:text-sm">
-                    <FaEdit size={19} className="cursor-pointer" />
-                  </td>
-                  <td className="border-b text-xs 2xl:text-sm">
-                    <IoTrashBin
-                      size={19}
-                      className="cursor-pointer"
-                      onClick={() => handleShowDeleteModal(projeto.id)}
-                      />
-                  </td>
+        {loading === true ? (
+          <div className="loader-container flex items-center justify-center align-middle h-full">
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="darkblue"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto text-left">
+              <thead>
+                <tr>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("cus_name")}
+                  >
+                    CLIENTE
+                    <SortIcon
+                      isSorted={sortConfig?.key === "cus_name"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_name")}
+                  >
+                    OBRA
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_name"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_start_date")}
+                  >
+                    DATA INICIO
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_start_date"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_end_date")}
+                  >
+                    DATA FIM
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_end_date"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_status")}
+                  >
+                    STATUS
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_status"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_contract_value")}
+                  >
+                    CONTRATO $
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_contract_value"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_category")}
+                  >
+                    CATEGORIA
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_category"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("prj_area")}
+                  >
+                    ÁREA
+                    <SortIcon
+                      isSorted={sortConfig?.key === "prj_area"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th
+                    className="px-4 py-2 cursor-pointer text-xs 2xl:text-sm whitespace-nowrap"
+                    onClick={() => requestSort("stg_name")}
+                  >
+                    ETAPA ATUAL
+                    <SortIcon
+                      isSorted={sortConfig?.key === "stg_name"}
+                      isAsc={sortConfig?.direction === "asc"}
+                    />
+                  </th>
+                  <th className="px-4 py-2"></th>
+                  <th className="px-4 py-2"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {sortedProjectsPaginated.map((projeto) => (
+                  <tr key={projeto.prj_id}>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {projeto.cus_name}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {projeto.prj_name}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {new Date(projeto.prj_start_date).toLocaleDateString(
+                        "pt-BR"
+                      )}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {new Date(projeto.prj_end_date).toLocaleDateString(
+                        "pt-BR"
+                      )}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 min-w-[150px] border-b text-xs 2xl:text-sm">
+                      {projeto.prj_status &&
+                        projeto.prj_status === "Em andamento" && (
+                          <Pill status="Em andamento" title="Em andamento" />
+                        )}
+                      {projeto.prj_status &&
+                        projeto.prj_status === "Finalizado" && (
+                          <Pill status="Finalizado" title="Finalizado" />
+                        )}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      R$:{" "}
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "decimal",
+                        minimumFractionDigits: 2,
+                      }).format(projeto.prj_contract_value)}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {projeto.prj_category}
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {projeto.prj_area} m²
+                    </td>
+                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                      {projeto.stg_name}
+                    </td>
+                    <td className="border-b text-xs 2xl:text-sm">
+                    <FaEdit size={19} className="cursor-pointer" onClick={() => handleModalEditConstruction(projeto)}/>
+                    </td>
+                    <td className="border-b text-xs 2xl:text-sm">
+                      <IoTrashBin
+                        size={19}
+                        className="cursor-pointer"
+                        onClick={() => handleShowDeleteModal(projeto.prj_id)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         <div>
           <div className="flex flex-row gap-2 items-center justify-end">
             <select
@@ -529,6 +614,11 @@ export function Constructions() {
         </div>
       </div>
       <ModalAddConstruction modalInfo={modalInfo} setModalInfo={setModalInfo} />
+      <ModalEditConstruction
+        modalInfo={modalEdit}
+        setModalInfo={setModalEdit}
+        data={projectSelected}
+      />
       <ModalDeleteRegister
         modalInfo={deleteModalInfo}
         setModalInfo={setDeleteModalInfo}

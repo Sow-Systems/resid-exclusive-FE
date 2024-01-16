@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import Cookies from "js-cookie";
 
 const baseURL = "https://api-residexclusive.onrender.com";
 
@@ -6,15 +7,15 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: baseURL,
 });
 
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("tokenResid");
-//   const strSemAspas = token?.replace(/"/g, "");
+axiosInstance.interceptors.request.use((config) => {
+  const token = Cookies.get("tokenResid");
+  console.log(token);
 
-//   if (token) {
-//     config.headers["Authorization"] = `Bearer ${strSemAspas}`;
-//   }
-//   return config;
-// });
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return config;
+});
 
 export default axiosInstance;
 
