@@ -64,12 +64,12 @@ export function Constructions() {
     setModalInfo(true);
   };
 
-  const [modalEdit, setModalEdit] = useState(false)
-  const [projectSelected, setProjectSelected] = useState([])
+  const [modalEdit, setModalEdit] = useState(false);
+  const [projectSelected, setProjectSelected] = useState([]);
 
   const handleModalEditConstruction = (project: any) => {
     setModalEdit(true);
-    setProjectSelected(project)
+    setProjectSelected(project);
   };
 
   const [deleteModalInfo, setDeleteModalInfo] = useState(false);
@@ -241,6 +241,7 @@ export function Constructions() {
     try {
       const response = await api.get("projects-info");
       setProjects(response.data);
+      console.log(response.data);
       setLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -532,62 +533,72 @@ export function Constructions() {
                 </tr>
               </thead>
               <tbody>
-                {sortedProjectsPaginated.map((projeto) => (
-                  <tr key={projeto.prj_id}>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {projeto.cus_name}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {projeto.prj_name}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {new Date(projeto.prj_start_date).toLocaleDateString(
-                        "pt-BR"
-                      )}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {new Date(projeto.prj_end_date).toLocaleDateString(
-                        "pt-BR"
-                      )}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 min-w-[150px] border-b text-xs 2xl:text-sm">
-                      {projeto.prj_status &&
-                        projeto.prj_status === "Em andamento" && (
-                          <Pill status="Em andamento" title="Em andamento" />
+                {sortedProjectsPaginated.map((projeto) => {
+                  const contract_value_divided =
+                    projeto.prj_contract_value / 100;
+                  const area_divided = projeto.prj_area / 100;
+
+                  return (
+                    <tr key={projeto.prj_id}>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {projeto.cus_name}
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {projeto.prj_name}
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {new Date(projeto.prj_start_date).toLocaleDateString(
+                          "pt-BR"
                         )}
-                      {projeto.prj_status &&
-                        projeto.prj_status === "Finalizado" && (
-                          <Pill status="Finalizado" title="Finalizado" />
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {new Date(projeto.prj_end_date).toLocaleDateString(
+                          "pt-BR"
                         )}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      R$:{" "}
-                      {new Intl.NumberFormat("pt-BR", {
-                        style: "decimal",
-                        minimumFractionDigits: 2,
-                      }).format(projeto.prj_contract_value)}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {projeto.prj_category}
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {projeto.prj_area} m²
-                    </td>
-                    <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
-                      {projeto.stg_name}
-                    </td>
-                    <td className="border-b text-xs 2xl:text-sm">
-                    <FaEdit size={19} className="cursor-pointer" onClick={() => handleModalEditConstruction(projeto)}/>
-                    </td>
-                    <td className="border-b text-xs 2xl:text-sm">
-                      <IoTrashBin
-                        size={19}
-                        className="cursor-pointer"
-                        onClick={() => handleShowDeleteModal(projeto.prj_id)}
-                      />
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 min-w-[150px] border-b text-xs 2xl:text-sm">
+                        {projeto.prj_status &&
+                          projeto.prj_status === "Em andamento" && (
+                            <Pill status="Em andamento" title="Em andamento" />
+                          )}
+                        {projeto.prj_status &&
+                          projeto.prj_status === "Finalizado" && (
+                            <Pill status="Finalizado" title="Finalizado" />
+                          )}
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        R$:{" "}
+                        {new Intl.NumberFormat("pt-BR", {
+                          style: "decimal",
+                          minimumFractionDigits: 2,
+                        }).format(contract_value_divided)}
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {projeto.prj_category}
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {area_divided} m²
+                      </td>
+                      <td className="px-2 py-1 2xl:px-4 2xl:py-2 border-b text-xs 2xl:text-sm">
+                        {projeto.stg_name}
+                      </td>
+                      <td className="border-b text-xs 2xl:text-sm">
+                        <FaEdit
+                          size={19}
+                          className="cursor-pointer"
+                          onClick={() => handleModalEditConstruction(projeto)}
+                        />
+                      </td>
+                      <td className="border-b text-xs 2xl:text-sm">
+                        <IoTrashBin
+                          size={19}
+                          className="cursor-pointer"
+                          onClick={() => handleShowDeleteModal(projeto.prj_id)}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

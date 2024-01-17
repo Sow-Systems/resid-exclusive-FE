@@ -9,7 +9,7 @@ export interface Address {
 
 export interface ProjectData {
   projectName: string;
-  description: string;
+  observations: string;
   startDate: string;
   endDate: string;
   status: string;
@@ -19,8 +19,8 @@ export interface ProjectData {
   art: string;
   technicalLeadName: string;
   architectName: string;
-  contractValue: number;
+  contractValue: string | number;
   rrt: string;
-  master: string;
+  foremanName: string;
   address: Address;
 }

@@ -8,6 +8,8 @@ import { ProjectData } from "@/types/projects";
 import { toast } from "react-toastify";
 import { api } from "@/utils/api";
 import { useEffect } from "react";
+import CurrencyInput from "react-currency-input-field";
+import { format } from 'date-fns';
 
 type DadosDaObraProps = {
   data?: {
@@ -78,9 +80,29 @@ export function DadosdaObra({ data = {} }: DadosDaObraProps) {
   const durationText = duration === 1 ? "Mês" : "Meses";
 
   const onSubmit = (data: ProjectData) => {
+    console.log(data)
     data.area = Number(data.area);
-    data.contractValue = Number(data.contractValue);
     data.address.number = Number(data.address.number);
+
+    if (typeof data.contractValue === 'string') {
+      const cleanedValue = data.contractValue.replace(/[R$\.,]/g, '').replace(/,/g, '.');
+      data.contractValue = parseFloat(cleanedValue);
+    } else if (typeof data.contractValue === 'number') {
+      data.contractValue = data.contractValue * 100;
+    } else {
+      data.contractValue = 0;
+    }
+
+    data.area = Number(data.area) * 100;
+
+    if (data.startDate) {
+      const startDate = new Date(data.startDate);
+      data.startDate = format(startDate, 'yyyy-MM-dd');
+    }
+    if (data.endDate) {
+      const endDate = new Date(data.endDate);
+      data.endDate = format(endDate, 'yyyy-MM-dd');
+    }
 
     saveNewProject(data);
   };
@@ -112,6 +134,7 @@ export function DadosdaObra({ data = {} }: DadosDaObraProps) {
               Área total
               <input
                 type="number"
+                step="any"
                 className="border text-gray-700 rounded p-1"
                 placeholder="ex: 600 m²"
                 {...register("area")}
@@ -151,11 +174,26 @@ export function DadosdaObra({ data = {} }: DadosDaObraProps) {
             </div>
             <div className="col-span-4 flex flex-col">
               Valor do Contrato
-              <input
-                type="number"
-                className="border text-gray-700 rounded p-1"
-                placeholder="R$: 3.500.000,00"
-                {...register("contractValue")}
+              <Controller
+                name="contractValue"
+                control={control}
+                render={({ field: { onChange, value, ref } }) => (
+                  <CurrencyInput
+                    id="contract-value-input"
+                    name="contractValue"
+                    placeholder="R$ 0,00"
+                    decimalsLimit={2}
+                    decimalSeparator=","
+                    groupSeparator="."
+                    prefix="R$ "
+                    value={value}
+                    onValueChange={(value) => {
+                      onChange(value);
+                    }}
+                    className="border text-gray-700 rounded p-1"
+                    ref={ref}
+                  />
+                )}
               />
             </div>
           </div>
@@ -255,7 +293,7 @@ export function DadosdaObra({ data = {} }: DadosDaObraProps) {
                 type="text"
                 className="border text-gray-700 rounded p-1 w-full"
                 placeholder="ex: Alberto de Souza"
-                {...register("master")}
+                {...register("foremanName")}
               />
             </div>
             <div className="col-span-2 flex flex-col">
@@ -276,7 +314,7 @@ export function DadosdaObra({ data = {} }: DadosDaObraProps) {
                 className="border text-gray-700 rounded p-1"
                 rows={3}
                 placeholder="Complete com as observações..."
-                {...register("description")}
+                {...register("observations")}
               ></textarea>
             </div>
           </div>
