@@ -22,6 +22,11 @@ export const ModalAddConstruction = ({
   setModalInfo,
 }: ModalAddConstructionProps) => {
   const [activeTab, setActiveTab] = useState("DadosdaObra");
+  const [projectId, setProjectId] = useState<number | null>(null);
+
+  const handleProjectIdChange = (newId: number) => {
+    setProjectId(newId);
+  };
 
   return (
     <Modal isOpen={modalInfo} setIsOpen={setModalInfo}>
@@ -48,6 +53,7 @@ export const ModalAddConstruction = ({
                 : "text-blue-950"
             }`}
             onClick={() => setActiveTab("Cliente")}
+            disabled={!projectId}
           >
             Cliente
           </Button>
@@ -58,6 +64,7 @@ export const ModalAddConstruction = ({
                 : "text-blue-950"
             }`}
             onClick={() => setActiveTab("Etapas")}
+            disabled={!projectId}
           >
             Etapas
           </Button>
@@ -68,12 +75,15 @@ export const ModalAddConstruction = ({
                 : "text-blue-950"
             }`}
             onClick={() => setActiveTab("Planejamento")}
+            disabled={!projectId}
           >
             Planejamento
           </Button>
         </div>
-        {activeTab === "DadosdaObra" && <DadosdaObra />}
-        {activeTab === "Cliente" && <Cliente />}
+        {activeTab === "DadosdaObra" && (
+          <DadosdaObra onProjectSave={handleProjectIdChange} />
+        )}
+        {activeTab === "Cliente" && <Cliente id={projectId} />}
         {activeTab === "Etapas" && <Etapas />}
         {activeTab === "Planejamento" && <Planejamento />}
       </div>

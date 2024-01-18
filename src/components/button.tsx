@@ -2,7 +2,7 @@ import { twJoin } from "tailwind-merge";
 
 type ButtonProps = Pick<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "onClick" | "className" | "children" | "type"
+  "onClick" | "className" | "children" | "type" | "disabled"
 >;
 
 const BUTTON_CLASSES = "py-2 px-4 rounded transition-colors duration-100";

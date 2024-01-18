@@ -211,7 +211,7 @@ export function Constructions() {
   const SortIcon = ({ isSorted, isAsc }) => {
     return (
       <span className="inline-block ml-2">
-        {isSorted ? (isAsc ? "↓" : "↑") : "↕️"}
+        {isSorted ? (isAsc ? "↓" : "↑") : "↓"}
       </span>
     );
   };
@@ -420,7 +420,7 @@ export function Constructions() {
           </div>
         </div>
       </div>
-      <div className="bg-[#FFFFFF] flex flex-col h-full w-full justify-between p-3 pb-6 gap-4 rounded">
+      <div className="bg-[#FFFFFF] flex flex-col h-[70vh] w-full justify-between p-3 gap-4 rounded">
         {loading === true ? (
           <div className="loader-container flex items-center justify-center align-middle h-full">
             <ThreeDots
@@ -603,14 +603,13 @@ export function Constructions() {
             </table>
           </div>
         )}
-        <div>
           <div className="flex flex-row gap-2 items-center justify-end">
             <select
               className="border p-1 rounded text-sm bg-white"
               value={itemsPerPage}
               onChange={handleItemsPerPageChange}
             >
-              {[10, 25, 50].map((size) => (
+              {[10, 20, 40].map((size) => (
                 <option key={size} value={size}>
                   {size} Linhas
                 </option>
@@ -621,7 +620,6 @@ export function Constructions() {
               itemsPerPage={itemsPerPage}
               onPageChange={onPageChange}
             />
-          </div>
         </div>
       </div>
       <ModalAddConstruction modalInfo={modalInfo} setModalInfo={setModalInfo} />

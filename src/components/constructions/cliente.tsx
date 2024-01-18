@@ -35,8 +35,14 @@ type ClientState = {
   observations: string;
 };
 
-export function Cliente() {
+type ClienteProps = {
+  id: number | null
+}
+
+export function Cliente({id}: ClienteProps) {
   const [deleteModalInfo, setDeleteModalInfo] = useState(false);
+
+  console.log("Id do new project:", id)
 
   const handleModalRemoveRegister = () => {
     setDeleteModalInfo(true);

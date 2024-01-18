@@ -136,7 +136,7 @@ export function Planejamento() {
   const SortIcon = ({ isSorted, isAsc }) => {
     return (
       <span className="inline-block ml-2">
-        {isSorted ? (isAsc ? "↓" : "↑") : "↕️"}
+        {isSorted ? (isAsc ? "↓" : "↑") : "↓"}
       </span>
     );
   };

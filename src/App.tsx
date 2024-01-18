@@ -10,7 +10,7 @@ export default function App() {
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
-      <ToastContainer position="top-center" />
+      <ToastContainer position="bottom-right" />
     </AuthProvider>
   );
 }

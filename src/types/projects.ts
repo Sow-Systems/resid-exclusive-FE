@@ -3,6 +3,7 @@ export interface Address {
   number: number;
   complement: string;
   neighborhood: string;
+  condominium: string;
   city: string;
   postalCode: number;
 }
@@ -16,7 +17,7 @@ export interface ProjectData {
   category: string;
   area: number;
   cno: string;
-  art: string;
+  artNumber: string;
   technicalLeadName: string;
   architectName: string;
   contractValue: string | number;

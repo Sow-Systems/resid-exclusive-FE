@@ -5,6 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { ModalAddEtapa } from "../modalAddEtapa";
+import { AreYouSureModal } from "../areYouSureModal";
 
 type Etapa = {
   id: number;
@@ -22,6 +23,14 @@ export function Etapas() {
     { id: 6, content: "Area Externa" },
     { id: 7, content: "Muro" },
   ]);
+
+  const [isAreYouSureModalVisible, setIsAreYouSureModalVisible] = useState(false);
+
+  const isAnyEtapaSelected = etapas.some(etapa => etapa.selected);
+
+  const handleDeleteConfirmation = () => {
+    setIsAreYouSureModalVisible(true);
+  };
 
   const addEtapas = (newEtapas: Etapa[]) => {
     setEtapas([...etapas, ...newEtapas]);
@@ -51,7 +60,7 @@ export function Etapas() {
         <div className="flex flex-row gap-2 p-4 justify-start">
           <div className="flex flex-col">
             <Button
-              className="bg-green-700 hover:bg-green-800 text-white flex flex-row gap-3 text-center align-middle justify-center items-center h-10 rounded-md"
+              className="bg-green-700 hover:bg-green-800 text-white flex flex-row gap-1 text-center align-middle justify-center items-center h-8 rounded-md"
               onClick={handleModalAddEtapa}
             >
               <FiPlus size={15} color={"white"} />
@@ -60,8 +69,9 @@ export function Etapas() {
           </div>
           <div className="flex flex-col">
             <Button
-              onClick={deleteSelected}
-              className="bg-red-700 hover:bg-red-800 text-white flex flex-row gap-3 text-center align-middle justify-center items-center w-36 h-10 rounded-md"
+        onClick={handleDeleteConfirmation}
+        disabled={!isAnyEtapaSelected}
+        className="bg-red-700 hover:bg-red-800 text-white flex flex-row gap-1 text-center align-middle justify-center items-center w-28 h-8 rounded-md"
             >
               <FaRegTrashAlt size={15} color={"white"} />
               <p className="text-sm">Excluir</p>
@@ -106,6 +116,11 @@ export function Etapas() {
         modalInfo={addEtapaModal}
         setModalInfo={setAddEtapaModal}
         onAddEtapas={addEtapas}
+      />
+      <AreYouSureModal
+        modalInfo={isAreYouSureModalVisible}
+        setModalInfo={setIsAreYouSureModalVisible}
+        onConfirm={deleteSelected} // Adicione a ação de exclusão aqui
       />
     </>
   );
