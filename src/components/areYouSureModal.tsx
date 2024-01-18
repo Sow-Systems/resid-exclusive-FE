@@ -1,7 +1,6 @@
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import ModalHeader from "./modalHeader";
 import Modal from "./modal";
 import { Button } from "./button";
 import { SetStateAction } from "react";
@@ -20,33 +19,32 @@ export const AreYouSureModal = ({
   setModalInfo,
   onConfirm
 }: AreYouSureModalProps) => {
-
   return (
     <Modal isOpen={modalInfo} setIsOpen={setModalInfo}>
-      <ModalHeader
-        onClose={() => setModalInfo(false)}
-        title=""
-      />
-      <div className="w-full mt-3 flex flex-col space-y-1.5 gap-1 p-2.5 rounded-lg md:max-w-md bg-card-light-gray items-center">
-        <div>Você tem certeza?</div>
-        <div className="flex flex-row justify-around w-full">
+      <div className="flex flex-col h-full w-full bg-gray-300 rounded">
+        <span className="text-red-700 font-semibold p-2">Exclusão de Registro</span>
+        <div className="flex justify-center items-center bg-gray-100 p-1 m-1 rounded text-red-600 h-32 text-center">
+          Você tem certerza?
+        </div>
+        <div className="flex flex-row justify-between gap-2 p-1">
           <Button
-            className="text-xs bg-green-700 text-white flex rounded-full"
+            onClick={() => setModalInfo(false)}
+            className="bg-red-600 hover:bg-red-800 text-white flex flex-row gap-3 w-32 text-center align-middle justify-center"
+          >
+            Não
+          </Button>
+          <Button
+            className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3 w-32 text-center align-middle justify-center"
             onClick={() => {
               setModalInfo(false);
-              onConfirm(); // Chame a função de exclusão aqui
+              onConfirm();
             }}
           >
             Sim
-          </Button>
-          <Button
-            onClick={() => setModalInfo(false)}
-            className="text-xs bg-red-700 text-white flex rounded-full"
-          >
-            Não
           </Button>
         </div>
       </div>
     </Modal>
   );
 };
+
