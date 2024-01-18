@@ -459,7 +459,7 @@ export function Cliente() {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm">
+      <div className="flex flex-col bg-white m-1 rounded-sm">
         <div className="flex flex-row gap-2 p-1 justify-end">
           <Button className="bg-blue-600 hover:bg-blue-800 text-white flex flex-row gap-3">
             <CiFloppyDisk size={20} />

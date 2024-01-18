@@ -171,7 +171,7 @@ export function Planejamento() {
 
   return (
     <>
-      <div className="flex flex-col bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm overflow-x-auto">
+      <div className="flex flex-col h-full bg-white mx-1 my-1 rounded-sm text-xs 2xl:text-sm overflow-x-auto">
         <div className="mb-1 mt-3 ml-4 flex flex-row justify-between">
           <p className="font-semibold">Dados do Planejamento</p>
         </div>
