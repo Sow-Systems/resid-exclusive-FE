@@ -123,7 +123,7 @@ export function Cliente({ id }: ClienteProps) {
 
   const getAllClients = async () => {
     try {
-      const response = await api.get("project/customers");
+      const response = await api.get("project-customers");
       console.log(response);
       setAllClients(response.data);
     } catch (error: any) {
@@ -191,9 +191,9 @@ export function Cliente({ id }: ClienteProps) {
                   <option value="" className="text-gray-500">
                     Selecione
                   </option>
-                  {clients.map((client) => (
-                    <option key={client.id} value={client.id.toString()}>
-                      {client.name}
+                  {allClients.map((client) => (
+                    <option key={client.cus_id} value={client.cus_id.toString()}>
+                      {client.cus_name}
                     </option>
                   ))}
                 </select>
@@ -297,7 +297,7 @@ export function Cliente({ id }: ClienteProps) {
                 Observações
                 <textarea
                   disabled={!isNewClient && clientSelected !== ""}
-                  value={client.observations}
+                  value={client.cus_notes}
                   onChange={(e) =>
                     updateClientField("observations", e.target.value)
                   }
@@ -383,10 +383,10 @@ export function Cliente({ id }: ClienteProps) {
             </div>
             <div className="flex flex-row justify-end gap-2 mb-2 mr-3 ">
               <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-                <MdOutlineArrowBackIos size={15} color={"gray"} />
+                <MdOutlineArrowBackIos size={12} color={"gray"} />
               </div>
               <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-                <MdOutlineArrowForwardIos size={15} color={"gray"} />
+                <MdOutlineArrowForwardIos size={12} color={"gray"} />
               </div>
             </div>
           </div>
@@ -481,10 +481,10 @@ export function Cliente({ id }: ClienteProps) {
             </div>
             <div className="flex flex-row justify-end gap-2 mb-2 mr-3 rounded-sm">
               <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-                <MdOutlineArrowBackIos size={15} color={"gray"} />
+                <MdOutlineArrowBackIos size={12} color={"gray"} />
               </div>
               <div className="p-1 rounded-md border-2 border-gray-400 hover:bg-gray-100 cursor-pointer">
-                <MdOutlineArrowForwardIos size={15} color={"gray"} />
+                <MdOutlineArrowForwardIos size={12} color={"gray"} />
               </div>
             </div>
           </div>

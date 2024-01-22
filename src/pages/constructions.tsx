@@ -1,5 +1,8 @@
 import SearchBar from "@/components/searchBar";
-import { MdKeyboardDoubleArrowUp } from "react-icons/md";
+import {
+  MdKeyboardDoubleArrowDown,
+  MdKeyboardDoubleArrowUp,
+} from "react-icons/md";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import { CiClock2 } from "react-icons/ci";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -415,7 +418,11 @@ export function Constructions() {
             onClick={toggleDivVisibility}
             className="bg-gray-300 flex items-center justify-center align-middle gap-2 rounded px-3 text-center cursor-pointer hover:bg-gray-400"
           >
-            <MdKeyboardDoubleArrowUp size={25} />
+            {isDivVisible === true ? (
+              <MdKeyboardDoubleArrowUp size={25} />
+            ) : (
+              <MdKeyboardDoubleArrowDown size={25} />
+            )}
             Filtros
           </div>
         </div>
@@ -603,23 +610,23 @@ export function Constructions() {
             </table>
           </div>
         )}
-          <div className="flex flex-row gap-2 items-center justify-end">
-            <select
-              className="border p-1 rounded text-sm bg-white"
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-            >
-              {[10, 20, 40].map((size) => (
-                <option key={size} value={size}>
-                  {size} Linhas
-                </option>
-              ))}
-            </select>
-            <Pagination
-              totalItems={totalItems}
-              itemsPerPage={itemsPerPage}
-              onPageChange={onPageChange}
-            />
+        <div className="flex flex-row gap-2 items-center justify-end">
+          <select
+            className="border p-1 rounded text-sm bg-white"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+          >
+            {[10, 20, 40].map((size) => (
+              <option key={size} value={size}>
+                {size} Linhas
+              </option>
+            ))}
+          </select>
+          <Pagination
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={onPageChange}
+          />
         </div>
       </div>
       <ModalAddConstruction modalInfo={modalInfo} setModalInfo={setModalInfo} />
