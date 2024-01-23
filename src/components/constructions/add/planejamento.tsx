@@ -1,6 +1,6 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button } from "../button";
+import { Button } from "../../button";
 import { CiFloppyDisk } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import { IoBackspaceOutline } from "react-icons/io5";
@@ -9,7 +9,7 @@ import { GoPencil } from "react-icons/go";
 
 import { useEffect, useMemo, useState } from "react";
 import { dadosMockados } from "@/utils/mock/planejamentoTable";
-import { Pagination } from "../pagination";
+import { Pagination } from "../../pagination";
 
 type ProjectData = {
   [key: string | number]: any;

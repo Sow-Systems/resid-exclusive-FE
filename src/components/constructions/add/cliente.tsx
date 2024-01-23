@@ -1,6 +1,6 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button } from "../button";
+import { Button } from "../../button";
 import { GoPencil } from "react-icons/go";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
@@ -9,8 +9,8 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 
 import { useEffect, useState } from "react";
-import { ModalDeleteRegister } from "../modalDeleteRegister";
-import { ModalSaveRegister } from "../modalSaveRegister";
+import { ModalDeleteRegister } from "../../modalDeleteRegister";
+import { ModalSaveRegister } from "../../modalSaveRegister";
 import { api } from "@/utils/api";
 import { toast } from "react-toastify";
 
@@ -43,8 +43,6 @@ type ClienteProps = {
 
 export function Cliente({ id }: ClienteProps) {
   const [deleteModalInfo, setDeleteModalInfo] = useState(false);
-
-  console.log("Id do new project:", id);
 
   const handleModalRemoveRegister = () => {
     setDeleteModalInfo(true);

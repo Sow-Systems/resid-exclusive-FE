@@ -1,11 +1,11 @@
 import { FiPlus } from "react-icons/fi";
-import { Button } from "../button";
+import { Button } from "../../button";
 import { CiFloppyDisk } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { ModalAddEtapa } from "../modalAddEtapa";
-import { AreYouSureModal } from "../areYouSureModal";
+import { ModalAddEtapa } from "../../modalAddEtapa";
+import { AreYouSureModal } from "../../areYouSureModal";
 
 type Etapa = {
   id: number;

@@ -3,11 +3,11 @@ import ptBR from "date-fns/locale/pt-BR";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import Modal from "./modal";
 import ModalHeader from "./modalHeader";
-import { DadosdaObra } from "./constructions/dadosDaObra";
+import { DadosdaObra } from "./constructions/add/dadosDaObra";
 import { Button } from "./button";
-import { Cliente } from "./constructions/cliente";
-import { Etapas } from "./constructions/etapas";
-import { Planejamento } from "./constructions/planejamento";
+import { Cliente } from "./constructions/add/cliente";
+import { Etapas } from "./constructions/add/etapas";
+import { Planejamento } from "./constructions/add/planejamento";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");

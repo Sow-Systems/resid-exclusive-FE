@@ -3,11 +3,12 @@ import ptBR from "date-fns/locale/pt-BR";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import Modal from "./modal";
 import ModalHeader from "./modalHeader";
-import { DadosdaObra } from "./constructions/dadosDaObra";
+import { DadosdaObra } from "./constructions/edit/dadosDaObra";
 import { Button } from "./button";
-import { Cliente } from "./constructions/cliente";
-import { Etapas } from "./constructions/etapas";
-import { Planejamento } from "./constructions/planejamento";
+import { Cliente } from "./constructions/edit/cliente";
+import { Etapas } from "./constructions/edit/etapas";
+import { Planejamento } from "./constructions/edit/planejamento";
+import { ProjectDataFromApi } from "@/types/projects";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -15,16 +16,16 @@ setDefaultLocale("pt-BR");
 interface ModalEditConstructionProps {
   modalInfo: boolean;
   setModalInfo: (value: SetStateAction<boolean>) => void;
-  data: any;
+  data: ProjectDataFromApi;
 }
 
 export const ModalEditConstruction = ({
   modalInfo,
   setModalInfo,
-  data
+  data,
 }: ModalEditConstructionProps) => {
   const [activeTab, setActiveTab] = useState("DadosdaObra");
-  console.log("Edit abriu")
+  console.log("Edit abriu");
 
   return (
     <Modal isOpen={modalInfo} setIsOpen={setModalInfo}>
@@ -76,7 +77,7 @@ export const ModalEditConstruction = ({
           </Button>
         </div>
         {activeTab === "DadosdaObra" && <DadosdaObra data={data} />}
-        {activeTab === "Cliente" && <Cliente />}
+        {activeTab === "Cliente" && <Cliente data={data} />}
         {activeTab === "Etapas" && <Etapas />}
         {activeTab === "Planejamento" && <Planejamento />}
       </div>

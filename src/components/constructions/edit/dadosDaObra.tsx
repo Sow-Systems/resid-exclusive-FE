@@ -1,10 +1,10 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button } from "../button";
+import { Button } from "../../button";
 import { CiFloppyDisk } from "react-icons/ci";
 import InputMask from "react-input-mask";
 import { useForm, Controller } from "react-hook-form";
-import { ProjectData } from "@/types/projects";
+import { ProjectData, ProjectDataFromApi } from "@/types/projects";
 import { toast } from "react-toastify";
 import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
@@ -13,15 +13,14 @@ import { format } from "date-fns";
 import { ThreeDots } from "react-loader-spinner";
 
 type DadosDaObraProps = {
-  data?: {
-    prj_id?: number;
-  };
+  data: ProjectDataFromApi;
   onProjectSave?: (newId: number) => void;
 };
 
-export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
+export function DadosdaObra({ data, onProjectSave }: DadosDaObraProps) {
   const { prj_id } = data;
   const [loading, setLoading] = useState(true);
+  console.log(data?.prj_id)
 
   const {
     register,
@@ -32,16 +31,16 @@ export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
     watch,
   } = useForm<ProjectData>();
 
-  const saveNewProject = async (data: ProjectData) => {
+  const saveProject = async (data: ProjectData) => {
     console.log("Iniciando envio do projeto", data);
     try {
-      const response = await api.post("project", data);
+      const response = await api.put("project", data);
       console.log(response);
-      toast.success("Novo Projeto salvo com sucesso!");
+      toast.success("Projeto atualizado com sucesso!");
       if (onProjectSave) {
         onProjectSave(response.data.idProject);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       if (error.message == "Network Error") toast.error(`Servidor inacessível`);
       else {
@@ -72,13 +71,16 @@ export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
         setValue("status", projectData.prj_status);
         setValue("category", projectData.prj_category);
         setValue("contractValue", contractValueCorrect);
+        // setValue("contractType", contractType);
+
         setValue("technicalLeadName", projectData.prj_technical_lead_name);
-        setValue("artNumber", projectData.prj_art);
+        setValue("art", projectData.prj_art);
         setValue("architectName", projectData.prj_architect_name);
-        setValue("rrt", projectData.prj_rrt);
+        setValue("rrt", projectData.prj_rrt.toString());
         setValue("foremanName", projectData.prj_foreman_name);
         setValue("cno", projectData.prj_cno);
         setValue("observations", projectData.prj_observations);
+        setValue("id", projectData.prj_id);
 
         setLoading(false)
 
@@ -145,7 +147,7 @@ export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
       data.endDate = format(endDate, "yyyy-MM-dd");
     }
 
-    saveNewProject(data);
+    saveProject(data);
   };
 
   function formatContractValue(value) {
@@ -299,7 +301,7 @@ export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
                   type="string"
                   className="border text-gray-700 rounded p-1 "
                   placeholder="ex: 123456789"
-                  {...register("artNumber")}
+                  {...register("art")}
                 />
               </div>
               <div className="col-span-2 flex flex-col">
@@ -423,7 +425,7 @@ export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
                 <input
                   type="number"
                   className="border text-gray-700 rounded p-1"
-                  placeholder="ex: 600 m²"
+                  placeholder="ex: 600"
                   {...register("address.number")}
                 />
               </div>
@@ -432,7 +434,7 @@ export function DadosdaObra({ data = {}, onProjectSave }: DadosDaObraProps) {
                 <input
                   type="text"
                   className="border text-gray-700 rounded p-1"
-                  placeholder="Em andamento"
+                  placeholder="Ao lado do prédio cinza"
                   {...register("address.complement")}
                 />
               </div>

@@ -16,12 +16,13 @@ import { FaEdit } from "react-icons/fa";
 import { IoTrashBin } from "react-icons/io5";
 import { Pagination } from "@/components/pagination";
 import { ModalAddConstruction } from "@/components/modalAddConstruction";
+import { ModalEditConstruction } from "@/components/modalEditConstruction";
 import { ModalDeleteRegister } from "@/components/modalDeleteRegister";
 import { Pill } from "@/utils/pill";
 import { api } from "@/utils/api";
 import { toast } from "react-toastify";
 import { ThreeDots } from "react-loader-spinner";
-import { ModalEditConstruction } from "@/components/modalEditConstruction";
+import { ProjectDataFromApi } from "@/types/projects";
 
 registerLocale("pt-BR", ptBR);
 setDefaultLocale("pt-BR");
@@ -68,7 +69,7 @@ export function Constructions() {
   };
 
   const [modalEdit, setModalEdit] = useState(false);
-  const [projectSelected, setProjectSelected] = useState([]);
+  const [projectSelected, setProjectSelected] = useState<ProjectDataFromApi>([]);
 
   const handleModalEditConstruction = (project: any) => {
     setModalEdit(true);
