@@ -6,6 +6,7 @@ export interface Address {
   condominium: string;
   city: string;
   postalCode: number;
+  state: string;
 }
 
 export interface ProjectData {

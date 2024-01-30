@@ -84,12 +84,15 @@ export function DadosdaObra({ data, onProjectSave }: DadosDaObraProps) {
 
         setLoading(false)
 
-        // setValue("address.street", projectData.prj_name);
-        // setValue("address.number", projectData.prj_name);
-        // setValue("address.complement", projectData.prj_name);
-        // setValue("address.neighborhood", projectData.prj_name);
-        // setValue("address.postalCode", projectData.prj_name);
-        // setValue("address.city", projectData.prj_name);
+        setValue("address.street", projectData.address.add_street);
+        setValue("address.number", projectData.address.add_number);
+        setValue("address.complement", projectData.address.add_complement);
+        setValue("address.neighborhood", projectData.address.add_neighborhood);
+        setValue("address.postalCode", projectData.address.add_postal_code);
+        setValue("address.city", projectData.address.add_city);
+        setValue("address.state", projectData.address.add_state);
+        setValue("address.condominium", projectData.address.add_observations1);
+
       } catch (error: any) {
         console.log(error);
         if (error.message == "Network Error")
@@ -441,7 +444,7 @@ export function DadosdaObra({ data, onProjectSave }: DadosDaObraProps) {
             </div>
 
             <div className="grid grid-cols-12 gap-2 px-4 py-2 2xl:p-4">
-              <div className="col-span-4 flex flex-col">
+              <div className="col-span-3 flex flex-col">
                 Bairro
                 <input
                   type="text"
@@ -450,7 +453,7 @@ export function DadosdaObra({ data, onProjectSave }: DadosDaObraProps) {
                   {...register("address.neighborhood")}
                 />
               </div>
-              <div className="col-span-4 flex flex-col">
+              <div className="col-span-3 flex flex-col">
                 Condominio
                 <input
                   type="text"
@@ -479,13 +482,22 @@ export function DadosdaObra({ data, onProjectSave }: DadosDaObraProps) {
                   )}
                 />
               </div>
-              <div className="col-span-2 flex flex-col">
+              <div className="col-span-3 flex flex-col">
                 Cidade
                 <input
                   type="text"
                   className="border text-gray-700 rounded p-1"
                   placeholder="ex: Ribeirão Preto"
                   {...register("address.city")}
+                />
+              </div>
+              <div className="col-span-1 flex flex-col">
+                UF
+                <input
+                  type="text"
+                  className="border text-gray-700 rounded p-1"
+                  placeholder="ex: SP"
+                  {...register("address.state")}
                 />
               </div>
             </div>
